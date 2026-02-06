@@ -1,0 +1,448 @@
+---
+// Page Bilan Clinique
+import MainLayout from '../layouts/MainLayout.astro';
+
+// Données cliniques
+const clinicalData = {
+  diagnosis: {
+    main: "Trouble du Spectre Autistique (TSA) sans déficience intellectuelle",
+    adosScore: "ADOS-2 Score: 11 (Seuil clinique atteint)",
+    diagnosisDate: "15/03/2024",
+    diagnosingClinician: "Dr. Sophie Martin, Psychiatre"
+  },
+  characteristics: [
+    "Hypersensibilité sensorielle (auditive, tactile)",
+    "Troubles Obsessionnels Compulsifs (TOC) avec rituels de vérification",
+    "Logorrhée dans situations de stress",
+    "Anxiété généralisée avec crises paniques occasionnelles",
+    "Difficultés dans la reconnaissance des émotions faciales",
+    "Intérêts spécifiques marqués (technologie, histoire)"
+  ],
+  cognitiveProfile: {
+    iqVerbal: 118,
+    iqPerformance: 105,
+    iqGlobal: 112,
+    memory: "Mémoire à long terme excellente, mémoire de travail dans la moyenne",
+    attention: "Attention soutenue difficile, distractibilité marquée"
+  }
+};
+
+// Pharmacopée comparative
+const medicationHistory = [
+  {
+    period: "Avant Novembre 2024",
+    medications: [
+      { name: "Paroxétine", dosage: "20mg", start: "01/2020", end: "10/2024", reason: "Dépression majeure", notes: "Effets secondaires: prise de poids, somnolence" }
+    ],
+    efficacy: "Partielle - amélioration de 40% des symptômes dépressifs",
+    sideEffects: ["Prise de poids (+8kg)", "Diminution libido", "Fatigue chronique"]
+  },
+  {
+    period: "Depuis Novembre 2024",
+    medications: [
+      { name: "Escitalopram", dosage: "15mg", start: "15/11/2024", end: "En cours", reason: "Dépression + anxiété", notes: "Mieux toléré que paroxétine" },
+      { name: "Agomélatine", dosage: "25mg", start: "15/11/2024", end: "En cours", reason: "Régulation rythme circadien", notes: "Amélioration du sommeil" },
+      { name: "Mélatonine", dosage: "2mg", start: "01/12/2024", end: "En cours", reason: "Insomnie", notes: "Efficacité modérée" }
+    ],
+    efficacy: "Bonne - amélioration de 70% des symptômes, meilleure tolérance",
+    sideEffects: ["Nausées initiales (résolues)", "Rêves vifs"]
+  }
+];
+
+// Évaluations psychométriques
+const evaluations = {
+  beckDepression: {
+    date: "15/01/2026",
+    score: 18,
+    interpretation: "Dépression modérée (14-19)",
+    items: [
+      { question: "Tristesse", score: 2 },
+      { question: "Pessimisme", score: 2 },
+      { question: "Sentiment d'échec", score: 1 },
+      { question: "Perte de plaisir", score: 3 },
+      { question: "Sentiment de culpabilité", score: 2 },
+      { question: "Sentiment de punition", score: 1 },
+      { question: "Auto-dépréciation", score: 2 },
+      { question: "Auto-accusations", score: 1 },
+      { question: "Idées suicidaires", score: 0 },
+      { question: "Pleurs", score: 2 },
+      { question: "Irritabilité", score: 2 }
+    ]
+  },
+  beckAnxiety: {
+    date: "15/01/2026",
+    score: 22,
+    interpretation: "Anxiété modérée (16-25)",
+    dimensions: {
+      somatic: 12,
+      cognitive: 10
+    }
+  }
+};
+
+// Questionnaire ouvert
+const openQuestions = [
+  {
+    question: "Quels sont vos principaux défis actuels ?",
+    response: "La gestion des interactions sociales non structurées et la régulation des émotions dans les environnements bruyants. Les changements de routine sont particulièrement difficiles.",
+    date: "20/01/2026"
+  },
+  {
+    question: "Quelles stratégies d'adaptation utilisez-vous ?",
+    response: "Utilisation de casques antibruit, planification rigoureuse des journées, pratique de la méditation guidée (applications), et écriture journalière pour organiser les pensées.",
+    date: "20/01/2026"
+  },
+  {
+    question: "Quels sont vos objectifs thérapeutiques ?",
+    response: "Améliorer la tolérance aux imprévus, développer des compétences en communication non verbale, et réduire la fréquence des rituels de vérification.",
+    date: "20/01/2026"
+  }
+];
+---
+
+<MainLayout title="Bilan Clinique">
+  <div class="container">
+    <!-- En-tête -->
+    <header class="page-header">
+      <h1>Bilan Clinique Complet</h1>
+      <p class="subtitle">Évaluations diagnostiques et suivi thérapeutique</p>
+    </header>
+
+    <!-- Navigation secondaire -->
+    <nav class="secondary-nav" aria-label="Navigation clinique">
+      <ul>
+        <li><a href="#diagnostic">Diagnostic</a></li>
+        <li><a href="#characteristics">Caractéristiques</a></li>
+        <li><a href="#medication">Pharmacopée</a></li>
+        <li><a href="#evaluations">Évaluations</a></li>
+        <li><a href="#questionnaires">Questionnaires</a></li>
+      </ul>
+    </nav>
+
+    <!-- Section Diagnostic -->
+    <section id="diagnostic" class="diagnostic-section card">
+      <h2>Diagnostic Principal</h2>
+      <div class="diagnostic-info">
+        <p><strong>Diagnostic:</strong> {clinicalData.diagnosis.main}</p>
+        <p><strong>Score ADOS-2:</strong> {clinicalData.diagnosis.adosScore}</p>
+        <p><strong>Date de diagnostic:</strong> {clinicalData.diagnosis.diagnosisDate}</p>
+        <p><strong>Clinicien:</strong> {clinicalData.diagnosis.diagnosingClinician}</p>
+      </div>
+
+      <div class="ados-explanation">
+        <h3>Interprétation ADOS-2</h3>
+        <p>Le score de 11 indique un seuil clinique clair pour le TSA. Les domaines particulièrement affectés incluent:</p>
+        <ul>
+          <li>Communication sociale et réciprocité (score: 8)</li>
+          <li>Comportements restreints et répétitifs (score: 3)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Section Caractéristiques -->
+    <section id="characteristics" class="characteristics-section card">
+      <h2>Caractéristiques Cliniques</h2>
+      <div class="characteristics-grid">
+        {clinicalData.characteristics.map(characteristic => (
+          <div class="characteristic-item">
+            <span class="characteristic-icon">•</span>
+            <span class="characteristic-text">{characteristic}</span>
+          </div>
+        ))}
+      </div>
+
+      <div class="cognitive-profile">
+        <h3>Profil Cognitif</h3>
+        <div class="profile-grid">
+          <div class="profile-item">
+            <span class="label">QI Verbal:</span>
+            <span class="value">{clinicalData.cognitiveProfile.iqVerbal}</span>
+          </div>
+          <div class="profile-item">
+            <span class="label">QI Performance:</span>
+            <span class="value">{clinicalData.cognitiveProfile.iqPerformance}</span>
+          </div>
+          <div class="profile-item">
+            <span class="label">QI Global:</span>
+            <span class="value">{clinicalData.cognitiveProfile.iqGlobal}</span>
+          </div>
+        </div>
+        <p><strong>Mémoire:</strong> {clinicalData.cognitiveProfile.memory}</p>
+        <p><strong>Attention:</strong> {clinicalData.cognitiveProfile.attention}</p>
+      </div>
+    </section>
+
+    <!-- Section Pharmacopée -->
+    <section id="medication" class="medication-section card">
+      <h2>Pharmacopée Comparative</h2>
+      <p class="section-intro">Comparaison des traitements avant et après novembre 2024</p>
+
+      <div class="medication-comparison">
+        {medicationHistory.map((period, index) => (
+          <div class="medication-period">
+            <h3>{period.period}</h3>
+
+            <h4>Médicaments:</h4>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Médicament</th>
+                  <th>Dosage</th>
+                  <th>Période</th>
+                  <th>Indication</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                {period.medications.map(med => (
+                  <tr>
+                    <td>{med.name}</td>
+                    <td>{med.dosage}</td>
+                    <td>{med.start} - {med.end}</td>
+                    <td>{med.reason}</td>
+                    <td>{med.notes}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <div class="efficacy-summary">
+              <p><strong>Efficacité globale:</strong> {period.efficacy}</p>
+              <p><strong>Effets secondaires:</strong></p>
+              <ul>
+                {period.sideEffects.map(effect => <li>{effect}</li>)}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section Évaluations -->
+    <section id="evaluations" class="evaluations-section card">
+      <h2>Évaluations Psychométriques</h2>
+
+      <div class="evaluation-card">
+        <h3>Questionnaire de Dépression de Beck (BDI-II)</h3>
+        <p><strong>Date:</strong> {evaluations.beckDepression.date}</p>
+        <p><strong>Score total:</strong> {evaluations.beckDepression.score}</p>
+        <p><strong>Interprétation:</strong> {evaluations.beckDepression.interpretation}</p>
+
+        <h4>Détail des items:</h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Question</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {evaluations.beckDepression.items.map(item => (
+              <tr>
+                <td>{item.question}</td>
+                <td>{item.score}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="evaluation-card">
+        <h3>Questionnaire d'Anxiété de Beck (BAI)</h3>
+        <p><strong>Date:</strong> {evaluations.beckAnxiety.date}</p>
+        <p><strong>Score total:</strong> {evaluations.beckAnxiety.score}</p>
+        <p><strong>Interprétation:</strong> {evaluations.beckAnxiety.interpretation}</p>
+
+        <div class="anxiety-dimensions">
+          <p><strong>Dimension somatique:</strong> {evaluations.beckAnxiety.dimensions.somatic}/21</p>
+          <p><strong>Dimension cognitive:</strong> {evaluations.beckAnxiety.dimensions.cognitive}/21</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Questionnaires Ouverts -->
+    <section id="questionnaires" class="questionnaires-section card">
+      <h2>Questionnaire Ouvert</h2>
+      <p class="section-intro">Réponses du patient aux questions ouvertes</p>
+
+      <div class="questionnaire-list">
+        {openQuestions.map((q, index) => (
+          <div class="question-item">
+            <h3>Question {index + 1}: {q.question}</h3>
+            <p class="question-date">Répondu le: {q.date}</p>
+            <div class="question-response">
+              <p>{q.response}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Actions cliniques -->
+    <section class="clinical-actions">
+      <h2>Actions et Suivi</h2>
+      <div class="actions-grid">
+        <a href="/parcours" class="action-card">
+          <h3>Voir l'anamnèse</h3>
+          <p>Historique complet du patient</p>
+        </a>
+        <a href="/archives" class="action-card">
+          <h3>Documents cliniques</h3>
+          <p>Bilans et rapports PDF</p>
+        </a>
+        <div class="action-card">
+          <h3>Prochain rendez-vous</h3>
+          <p>05/03/2026 - Suivi psychiatrique</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Styles spécifiques -->
+  <style>
+    .secondary-nav {
+      background-color: #f8f9fa;
+      padding: var(--spacing-sm) 0;
+      margin-bottom: var(--spacing-lg);
+      border-radius: var(--border-radius);
+    }
+
+    .secondary-nav ul {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--spacing-md);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .secondary-nav a {
+      padding: var(--spacing-sm) var(--spacing-md);
+      background-color: white;
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+      transition: var(--transition);
+    }
+
+    .secondary-nav a:hover {
+      background-color: var(--color-secondary);
+      color: white;
+      border-color: var(--color-secondary);
+    }
+
+    .diagnostic-info {
+      background-color: #f8f9fa;
+      padding: var(--spacing-md);
+      border-radius: var(--border-radius);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .ados-explanation {
+      background-color: white;
+      padding: var(--spacing-md);
+      border-radius: var(--border-radius);
+      border-left: 4px solid var(--color-secondary);
+    }
+
+    .characteristics-grid {
+      display: grid;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .characteristic-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-sm) var(--spacing-md);
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+    }
+
+    .characteristic-icon {
+      color: var(--color-secondary);
+      font-size: 1.2rem;
+      margin-top: 2px;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .profile-item {
+      text-align: center;
+      padding: var(--spacing-sm);
+      background-color: white;
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+    }
+
+    .medication-comparison {
+      display: grid;
+      gap: var(--spacing-lg);
+    }
+
+    .medication-period {
+      padding: var(--spacing-md);
+      background-color: white;
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+    }
+
+    .efficacy-summary {
+      margin-top: var(--spacing-md);
+      padding: var(--spacing-sm);
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+    }
+
+    .evaluation-card {
+      margin-bottom: var(--spacing-lg);
+      padding: var(--spacing-md);
+      background-color: white;
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+    }
+
+    .questionnaire-list {
+      display: grid;
+      gap: var(--spacing-md);
+    }
+
+    .question-item {
+      padding: var(--spacing-md);
+      background-color: white;
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+    }
+
+    .question-response {
+      margin-top: var(--spacing-sm);
+      padding: var(--spacing-sm);
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+      font-style: italic;
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    @media (max-width: 768px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .secondary-nav ul {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</MainLayout>

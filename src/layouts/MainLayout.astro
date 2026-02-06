@@ -1,0 +1,149 @@
+---
+// Layout principal avec menu de navigation horizontal
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Dossier Médical Numérique - Frédéric HAUGUEL" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" href="/favicon.ico" />
+  <title>Dossier Médical - {Astro.props.title || 'Accueil'}</title>
+</head>
+<body>
+  <!-- Skip link pour accessibilité -->
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <!-- Header avec navigation horizontale -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="/" class="nav-link {Astro.url.pathname === '/' ? 'active' : ''}">Accueil</a>
+          </li>
+          <li class="nav-item">
+            <a href="/clinique" class="nav-link {Astro.url.pathname === '/clinique' ? 'active' : ''}">Bilan Clinique</a>
+          </li>
+          <li class="nav-item">
+            <a href="/parcours" class="nav-link {Astro.url.pathname === '/parcours' ? 'active' : ''}">Anamnèse</a>
+          </li>
+          <li class="nav-item">
+            <a href="/social" class="nav-link {Astro.url.pathname === '/social' ? 'active' : ''}">Réalités Sociales</a>
+          </li>
+          <li class="nav-item">
+            <a href="/projet" class="nav-link {Astro.url.pathname === '/projet' ? 'active' : ''}">Projet Associatif</a>
+          </li>
+          <li class="nav-item">
+            <a href="/archives" class="nav-link {Astro.url.pathname === '/archives' ? 'active' : ''}">Archives</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contenu principal -->
+  <main id="main-content" class="main-content">
+    <slot />
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; {new Date().getFullYear()} - Dossier Médical Numérique | Frédéric HAUGUEL</p>
+      <p>Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}</p>
+    </div>
+  </footer>
+
+  <!-- Styles spécifiques au layout -->
+  <style>
+    .site-header {
+      background-color: var(--color-primary);
+      color: white;
+      padding: var(--spacing-sm) 0;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .main-nav {
+      display: flex;
+      justify-content: center;
+    }
+
+    .nav-list {
+      display: flex;
+      list-style: none;
+      gap: var(--spacing-lg);
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      color: white;
+      font-weight: 600;
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-link:hover, .nav-link:focus {
+      background-color: var(--color-secondary);
+      text-decoration: none;
+    }
+
+    .nav-link.active {
+      background-color: var(--color-secondary);
+      font-weight: 700;
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      height: 6px;
+      background-color: white;
+      border-radius: 50%;
+    }
+
+    .main-content {
+      min-height: calc(100vh - 120px);
+      padding: var(--spacing-lg) 0;
+    }
+
+    .site-footer {
+      background-color: var(--color-dark);
+      color: white;
+      padding: var(--spacing-md) 0;
+      text-align: center;
+      margin-top: var(--spacing-lg);
+    }
+
+    /* Responsive navigation */
+    @media (max-width: 768px) {
+      .nav-list {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-sm);
+      }
+
+      .nav-link {
+        display: block;
+        text-align: center;
+      }
+    }
+  </style>
+</body>
+</html>

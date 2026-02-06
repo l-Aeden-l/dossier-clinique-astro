@@ -1,0 +1,896 @@
+---
+// Page Projet Associatif
+import MainLayout from '../layouts/MainLayout.astro';
+
+// Données du projet
+const projectData = {
+  title: "Pôle Numérique / Technologique",
+  subtitle: "Innovation Sociale et Inclusion par la Technologie",
+  mission: "Créer un espace collaboratif où la technologie devient un levier d'inclusion sociale et professionnelle pour les personnes en situation de handicap et de précarité.",
+  vision: "Un monde où les compétences techniques et la créativité numérique permettent à chacun de trouver sa place dans la société, indépendamment de ses différences neurologiques ou sociales.",
+  values: [
+    "Inclusion: Accessibilité universelle et adaptation aux besoins spécifiques",
+    "Collaboration: Travail d'équipe et partage des savoirs",
+    "Innovation: Utilisation créative des technologies",
+    "Autonomie: Développement des compétences et empowerment",
+    "Durabilité: Approche écologique et économique responsable"
+  ],
+  objectives: {
+    shortTerm: [
+      "Création d'un Repair Café spécialisé en informatique",
+      "Mise en place d'ateliers d'initiation au numérique",
+      "Développement de partenariats avec les acteurs locaux",
+      "Obtention d'un local adapté et accessible"
+    ],
+    mediumTerm: [
+      "Création d'un Fab Lab avec équipements adaptés",
+      "Développement de programmes de formation certifiants",
+      "Mise en place d'un système de mentorat",
+      "Création d'une plateforme de ressources numériques"
+    ],
+    longTerm: [
+      "Développement d'un modèle économique durable",
+      "Création d'emplois adaptés dans le secteur numérique",
+      "Extension du modèle à d'autres territoires",
+      "Reconnaissance comme centre de référence pour l'inclusion numérique"
+    ]
+  }
+};
+
+// Activités prévues
+const activities = [
+  {
+    name: "Repair Café Numérique",
+    description: "Atelier de réparation d'équipements informatiques avec accompagnement personnalisé",
+    frequency: "Hebdomadaire (mercredi après-midi)",
+    target: "Personnes en difficulté avec leur matériel informatique",
+    skillsDeveloped: ["Diagnostic technique", "Réparation hardware", "Maintenance logicielle"],
+    equipment: ["Outils de réparation", "Pièces détachées", "Stations de test", "Logiciels de diagnostic"]
+  },
+  {
+    name: "Ateliers Fab Lab",
+    description: "Sessions de fabrication numérique et prototypage rapide",
+    frequency: "Bimensuel (samedi matin)",
+    target: "Créateurs, makers et personnes intéressées par la fabrication",
+    skillsDeveloped: ["Modélisation 3D", "Impression 3D", "Découpe laser", "Électronique"],
+    equipment: ["Imprimantes 3D", "Découpeuse laser", "Fraiseuse CNC", "Kits Arduino/Raspberry Pi"]
+  },
+  {
+    name: "Formation IA & Data",
+    description: "Inititation aux concepts d'intelligence artificielle et analyse de données",
+    frequency: "Mensuel (cycle de 4 sessions)",
+    target: "Débutants et intermédiaires en programmation",
+    skillsDeveloped: ["Bases de Python", "Machine Learning", "Visualisation de données", "Éthique de l'IA"],
+    equipment: ["Ordinateurs équipés", "Logiciels spécialisés", "Jeux de données pédagogiques"]
+  },
+  {
+    name: "Coworking Solidaire",
+    description: "Espace de travail partagé avec accompagnement social",
+    frequency: "Permanent (lundi-vendredi 9h-17h)",
+    target: "Travailleurs indépendants, télétravailleurs, personnes en reconversion",
+    skillsDeveloped: ["Gestion de projet", "Réseautage", "Autonomie professionnelle"],
+    equipment: ["Postes de travail", "Salles de réunion", "Connexion haut débit", "Espace détente"]
+  }
+];
+
+// Modèle économique
+const businessModel = {
+  revenueStreams: [
+    {
+      name: "Services de réparation",
+      description: "Réparation d'équipements informatiques à tarif solidaire",
+      pricing: "Tarification progressive selon les revenus",
+      estimatedRevenue: "1 500 - 2 500€/mois"
+    },
+    {
+      name: "Formations payantes",
+      description: "Ateliers et formations spécialisées",
+      pricing: "Forfaits selon la durée et le niveau",
+      estimatedRevenue: "1 000 - 2 000€/mois"
+    },
+    {
+      name: "Location d'équipements",
+      description: "Location de matériel Fab Lab et espaces",
+      pricing: "Tarifs horaires ou forfaitaires",
+      estimatedRevenue: "800 - 1 500€/mois"
+    },
+    {
+      name: "Subventions et partenariats",
+      description: "Financements publics et privés",
+      pricing: "Variable selon les appels à projets",
+      estimatedRevenue: "5 000 - 10 000€/an"
+    }
+  ],
+  costStructure: [
+    {
+      category: "Locaux",
+      estimatedCost: "1 200€/mois",
+      details: "Loyer, charges, assurance"
+    },
+    {
+      category: "Équipements",
+      estimatedCost: "300€/mois",
+      details: "Maintenance, renouvellement, consommables"
+    },
+    {
+      category: "Personnel",
+      estimatedCost: "2 500€/mois",
+      details: "2 ETP (Équivalent Temps Plein)"
+    },
+    {
+      category: "Fonctionnement",
+      estimatedCost: "800€/mois",
+      details: "Communication, administration, divers"
+    }
+  ],
+  breakEven: {
+    monthly: "4 800€",
+    timeline: "12-18 mois",
+    sustainability: "Modèle viable à partir de la 2ème année"
+  }
+};
+
+// Partenariats
+const partnerships = [
+  {
+    name: "Byblos Villeneuve-sur-Lot",
+    type: "Association locale",
+    role: "Accompagnement social et mise en réseau",
+    contact: "Jean Dupont",
+    status: "Partenariat signé"
+  },
+  {
+    name: "Bénévoles du 47",
+    type: "Réseau associatif",
+    role: "Mobilisation de bénévoles et visibilité",
+    contact: "Marie Laurent",
+    status: "Convention en cours"
+  },
+  {
+    name: "MDPH 47",
+    type: "Institution publique",
+    role: "Orientation des bénéficiaires et soutien financier",
+    contact: "Sophie Martin",
+    status: "Discussions avancées"
+  },
+  {
+    name: "Région Nouvelle-Aquitaine",
+    type: "Collectivité territoriale",
+    role: "Financement et soutien aux projets innovants",
+    contact: "Pierre Dubois",
+    status: "Dossier en instruction"
+  }
+];
+
+// Calendrier de mise en œuvre
+const timeline = [
+  {
+    phase: "Préparation (Q2 2026)",
+    tasks: [
+      "Finalisation du business plan",
+      "Recherche de locaux",
+      "Montage des dossiers de financement",
+      "Recrutement des premiers bénévoles"
+    ],
+    status: "En cours"
+  },
+  {
+    phase: "Lancement (Q3 2026)",
+    tasks: [
+      "Ouverture du Repair Café",
+      "Premiers ateliers d'initiation",
+      "Mise en place de l'espace coworking",
+      "Lancement de la communication"
+    ],
+    status: "Prévu"
+  },
+  {
+    phase: "Développement (Q4 2026 - Q2 2027)",
+    tasks: [
+      "Acquisition des équipements Fab Lab",
+      "Lancement des formations certifiantes",
+      "Développement des partenariats",
+      "Évaluation et ajustement"
+    ],
+    status: "Prévu"
+  },
+  {
+    phase: "Stabilisation (Q3 2027+)",
+    tasks: [
+      "Atteinte de l'équilibre financier",
+      "Développement de l'équipe",
+      "Extension des activités",
+      "Pérennisation du modèle"
+    ],
+    status: "Prévu"
+  }
+];
+---
+
+<MainLayout title="Projet Associatif">
+  <div class="container">
+    <!-- En-tête -->
+    <header class="page-header">
+      <h1>{projectData.title}</h1>
+      <p class="subtitle">{projectData.subtitle}</p>
+    </header>
+
+    <!-- Navigation secondaire -->
+    <nav class="secondary-nav" aria-label="Navigation projet">
+      <ul>
+        <li><a href="#vision">Vision et Mission</a></li>
+        <li><a href="#activities">Activités</a></li>
+        <li><a href="#model">Modèle Économique</a></li>
+        <li><a href="#partners">Partenariats</a></li>
+        <li><a href="#timeline">Calendrier</a></li>
+      </ul>
+    </nav>
+
+    <!-- Section Vision -->
+    <section id="vision" class="vision-section card">
+      <h2>Vision et Mission</h2>
+
+      <div class="mission-statement">
+        <h3>Mission</h3>
+        <p>{projectData.mission}</p>
+      </div>
+
+      <div class="vision-statement">
+        <h3>Vision</h3>
+        <p>{projectData.vision}</p>
+      </div>
+
+      <div class="values-grid">
+        <h3>Nos Valeurs</h3>
+        <div class="values-list">
+          {projectData.values.map(value => (
+            <div class="value-item">
+              <span class="value-icon">✓</span>
+              <span class="value-text">{value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="objectives">
+        <h3>Objectifs</h3>
+        <div class="objectives-grid">
+          <div class="objective-category">
+            <h4>Court terme (0-12 mois)</h4>
+            <ul>
+              {projectData.objectives.shortTerm.map(objective => (
+                <li>{objective}</li>
+              ))}
+            </ul>
+          </div>
+          <div class="objective-category">
+            <h4>Moyen terme (1-3 ans)</h4>
+            <ul>
+              {projectData.objectives.mediumTerm.map(objective => (
+                <li>{objective}</li>
+              ))}
+            </ul>
+          </div>
+          <div class="objective-category">
+            <h4>Long terme (3-5 ans)</h4>
+            <ul>
+              {projectData.objectives.longTerm.map(objective => (
+                <li>{objective}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Activités -->
+    <section id="activities" class="activities-section">
+      <h2>Activités Prévues</h2>
+      <p class="section-intro">Programmes et services proposés</p>
+
+      {activities.map(activity => (
+        <div class="activity-card">
+          <div class="activity-header">
+            <h3>{activity.name}</h3>
+            <span class="activity-frequency">{activity.frequency}</span>
+          </div>
+          <div class="activity-content">
+            <p><strong>Description:</strong> {activity.description}</p>
+            <p><strong>Public cible:</strong> {activity.target}</p>
+
+            <div class="activity-details">
+              <h4>Compétences développées:</h4>
+              <ul>
+                {activity.skillsDeveloped.map(skill => (
+                  <li>{skill}</li>
+                ))}
+              </ul>
+
+              <h4>Équipements nécessaires:</h4>
+              <ul>
+                {activity.equipment.map(equip => (
+                  <li>{equip}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      ))}
+    </section>
+
+    <!-- Section Modèle Économique -->
+    <section id="model" class="model-section card">
+      <h2>Modèle Économique</h2>
+
+      <div class="model-summary">
+        <h3>Résumé Financier</h3>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <span class="label">Seuil de rentabilité:</span>
+            <span class="value">{businessModel.breakEven.monthly}/mois</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Délai d'équilibre:</span>
+            <span class="value">{businessModel.breakEven.timeline}</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Durabilité:</span>
+            <span class="value">{businessModel.breakEven.sustainability}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="revenue-streams">
+        <h3>Sources de Revenus</h3>
+        <div class="streams-grid">
+          {businessModel.revenueStreams.map(stream => (
+            <div class="stream-card">
+              <h4>{stream.name}</h4>
+              <p>{stream.description}</p>
+              <p><strong>Tarification:</strong> {stream.pricing}</p>
+              <p><strong>Revenu estimé:</strong> {stream.estimatedRevenue}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="revenue-chart">
+          <h4>Répartition des revenus</h4>
+          <div class="chart-container">
+            <div class="chart-bar repair" style="width: 35%">
+              <span>Réparations</span>
+            </div>
+            <div class="chart-bar formation" style="width: 25%">
+              <span>Formations</span>
+            </div>
+            <div class="chart-bar location" style="width: 20%">
+              <span>Locations</span>
+            </div>
+            <div class="chart-bar subventions" style="width: 20%">
+              <span>Subventions</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cost-structure">
+        <h3>Structure des Coûts</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Catégorie</th>
+              <th>Coût estimé</th>
+              <th>Détails</th>
+            </tr>
+          </thead>
+          <tbody>
+            {businessModel.costStructure.map(cost => (
+              <tr>
+                <td>{cost.category}</td>
+                <td>{cost.estimatedCost}</td>
+                <td>{cost.details}</td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td><strong>Total</strong></td>
+              <td><strong>4 800€/mois</strong></td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section Partenariats -->
+    <section id="partners" class="partners-section card">
+      <h2>Partenariats et Collaborations</h2>
+
+      <div class="partners-grid">
+        {partnerships.map(partner => (
+          <div class="partner-card">
+            <h3>{partner.name}</h3>
+            <p><strong>Type:</strong> {partner.type}</p>
+            <p><strong>Rôle:</strong> {partner.role}</p>
+            <p><strong>Contact:</strong> {partner.contact}</p>
+            <div class="partner-status {partner.status === 'Partenariat signé' ? 'active' : partner.status === 'Convention en cours' ? 'in-progress' : 'pending'}">
+              {partner.status}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="partnership-map">
+        <h3>Carte des Partenariats</h3>
+        <div class="map-container">
+          <div class="map-legend">
+            <div class="legend-item">
+              <span class="legend-dot active"></span>
+              <span>Partenariat actif</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot in-progress"></span>
+              <span>En cours</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot pending"></span>
+              <span>Potentiel</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Calendrier -->
+    <section id="timeline" class="timeline-section card">
+      <h2>Calendrier de Mise en Œuvre</h2>
+
+      <div class="project-timeline">
+        {timeline.map((phase, index) => (
+          <div class="timeline-phase">
+            <div class="phase-header">
+              <h3>{phase.phase}</h3>
+              <span class="phase-status {phase.status === 'En cours' ? 'current' : 'future'}">
+                {phase.status}
+              </span>
+            </div>
+            <div class="phase-tasks">
+              <ul>
+                {phase.tasks.map(task => (
+                  <li>{task}</li>
+                ))}
+              </ul>
+            </div>
+            {index < timeline.length - 1 && <div class="phase-connector"></div>}
+          </div>
+        ))}
+      </div>
+
+      <div class="gantt-chart">
+        <h3>Diagramme de Gantt Simplifié</h3>
+        <div class="chart-container">
+          <div class="chart-axis">
+            <span>2026 Q1</span>
+            <span>2026 Q2</span>
+            <span>2026 Q3</span>
+            <span>2026 Q4</span>
+            <span>2027 Q1</span>
+            <span>2027 Q2</span>
+          </div>
+          <div class="chart-bars">
+            <div class="chart-bar prep" style="width: 25%; left: 25%"></div>
+            <div class="chart-bar launch" style="width: 25%; left: 50%"></div>
+            <div class="chart-bar dev" style="width: 50%; left: 75%"></div>
+          </div>
+          <div class="chart-legend">
+            <div class="legend-item">
+              <span class="legend-color prep"></span>
+              <span>Préparation</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color launch"></span>
+              <span>Lancement</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color dev"></span>
+              <span>Développement</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Impact et Bénéfices -->
+    <section class="impact-section card">
+      <h2>Impact et Bénéfices Attendus</h2>
+
+      <div class="impact-grid">
+        <div class="impact-item">
+          <h3>Social</h3>
+          <ul>
+            <li>Création d'un espace d'inclusion et de mixité sociale</li>
+            <li>Développement des compétences numériques pour les personnes éloignées</li>
+            <li>Réduction de l'isolement grâce aux activités collectives</li>
+            <li>Création de liens sociaux et professionnels</li>
+          </ul>
+        </div>
+
+        <div class="impact-item">
+          <h3>Économique</h3>
+          <ul>
+            <li>Création d'emplois locaux (2 ETP directs + emplois indirects)</li>
+            <li>Développement de compétences professionnelles valorisables</li>
+            <li>Réduction des dépenses sociales grâce à l'autonomisation</li>
+            <li>Dynamisation du tissu économique local</li>
+          </ul>
+        </div>
+
+        <div class="impact-item">
+          <h3>Environnemental</h3>
+          <ul>
+            <li>Réduction des déchets électroniques grâce au Repair Café</li>
+            <li>Promotion de l'économie circulaire</li>
+            <li>Sensibilisation aux enjeux écologiques</li>
+            <li>Utilisation responsable des ressources</li>
+          </ul>
+        </div>
+
+        <div class="impact-item">
+          <h3>Personnel</h3>
+          <ul>
+            <li>Amélioration de l'estime de soi et de la confiance</li>
+            <li>Développement de l'autonomie et des compétences</li>
+            <li>Création de perspectives professionnelles</li>
+            <li>Amélioration de la qualité de vie</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Appel à l'Action -->
+    <section class="cta-section">
+      <h2>Comment Participer ?</h2>
+
+      <div class="cta-grid">
+        <div class="cta-card">
+          <h3>Devenir Bénévole</h3>
+          <p>Rejoignez notre équipe et partagez vos compétences</p>
+          <button class="btn">Postuler comme bénévole</button>
+        </div>
+
+        <div class="cta-card">
+          <h3>Devenir Partenaire</h3>
+          <p>Collaborez avec nous pour amplifier l'impact</p>
+          <button class="btn">Devenir partenaire</button>
+        </div>
+
+        <div class="cta-card">
+          <h3>Faire un Don</h3>
+          <p>Soutenez financièrement notre projet</p>
+          <button class="btn btn-success">Faire un don</button>
+        </div>
+
+        <div class="cta-card">
+          <h3>Participer aux Activités</h3>
+          <p>Rejoignez nos ateliers et formations</p>
+          <button class="btn">Voir le calendrier</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Styles spécifiques -->
+  <style>
+    .values-list {
+      display: grid;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .value-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-sm) var(--spacing-md);
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+    }
+
+    .value-icon {
+      color: var(--color-success);
+      font-weight: 600;
+      min-width: 20px;
+    }
+
+    .objectives-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    .objective-category {
+      background-color: white;
+      padding: var(--spacing-md);
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+    }
+
+    .activity-card {
+      margin-bottom: var(--spacing-lg);
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+    }
+
+    .activity-header {
+      background-color: var(--color-secondary);
+      color: white;
+      padding: var(--spacing-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .activity-frequency {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+
+    .activity-content {
+      padding: var(--spacing-lg);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .streams-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    .stream-card {
+      background-color: white;
+      padding: var(--spacing-sm);
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+    }
+
+    .revenue-chart {
+      margin-top: var(--spacing-lg);
+    }
+
+    .chart-container {
+      height: 40px;
+      position: relative;
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+      margin: var(--spacing-sm) 0;
+    }
+
+    .chart-bar {
+      position: absolute;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .chart-bar.repair {
+      background-color: var(--color-success);
+      left: 0;
+    }
+
+    .chart-bar.formation {
+      background-color: var(--color-primary);
+      left: 35%;
+    }
+
+    .chart-bar.location {
+      background-color: var(--color-warning);
+      left: 60%;
+    }
+
+    .chart-bar.subventions {
+      background-color: var(--color-secondary);
+      left: 80%;
+    }
+
+    .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    .partner-card {
+      background-color: white;
+      padding: var(--spacing-md);
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+    }
+
+    .partner-status {
+      display: inline-block;
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: var(--spacing-sm);
+    }
+
+    .partner-status.active {
+      background-color: var(--color-success);
+      color: white;
+    }
+
+    .partner-status.in-progress {
+      background-color: var(--color-warning);
+      color: white;
+    }
+
+    .partner-status.pending {
+      background-color: #6c5ce7;
+      color: white;
+    }
+
+    .project-timeline {
+      position: relative;
+      padding-left: var(--spacing-lg);
+    }
+
+    .timeline-phase {
+      position: relative;
+      margin-bottom: var(--spacing-lg);
+      padding-left: var(--spacing-lg);
+    }
+
+    .phase-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .phase-status {
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .phase-status.current {
+      background-color: var(--color-success);
+      color: white;
+    }
+
+    .phase-status.future {
+      background-color: var(--color-warning);
+      color: white;
+    }
+
+    .phase-connector {
+      position: absolute;
+      left: 0;
+      top: 20px;
+      bottom: calc(var(--spacing-lg) * -1);
+      width: 2px;
+      background-color: var(--color-secondary);
+    }
+
+    .gantt-chart {
+      margin-top: var(--spacing-lg);
+    }
+
+    .chart-axis {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-sm);
+      font-size: 0.8rem;
+      color: var(--color-primary);
+    }
+
+    .chart-bars {
+      position: relative;
+      height: 30px;
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+    }
+
+    .chart-bars div {
+      position: absolute;
+      height: 100%;
+      border-radius: var(--border-radius);
+    }
+
+    .chart-bar.prep {
+      background-color: var(--color-warning);
+    }
+
+    .chart-bar.launch {
+      background-color: var(--color-success);
+    }
+
+    .chart-bar.dev {
+      background-color: var(--color-primary);
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-sm);
+      font-size: 0.8rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+
+    .legend-color {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .legend-color.prep {
+      background-color: var(--color-warning);
+    }
+
+    .legend-color.launch {
+      background-color: var(--color-success);
+    }
+
+    .legend-color.dev {
+      background-color: var(--color-primary);
+    }
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    .impact-item {
+      background-color: white;
+      padding: var(--spacing-md);
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    .cta-card {
+      text-align: center;
+      padding: var(--spacing-lg);
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+
+    .cta-card button {
+      margin-top: var(--spacing-sm);
+    }
+
+    @media (max-width: 768px) {
+      .objectives-grid, .streams-grid, .partners-grid, .impact-grid, .cta-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</MainLayout>

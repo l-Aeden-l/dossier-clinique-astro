@@ -1,11 +1,328 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+// Page d'accueil - Identité et Dashboard
+import MainLayout from '../layouts/MainLayout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Données patient
+const patient = {
+  name: "Frédéric HAUGUEL",
+  birthDate: "14/10/1979",
+  age: new Date().getFullYear() - 1979,
+  aahStatus: "Bénéficiaire AAH depuis novembre 2024",
+  aahExpiry: "Échéance 10/2026",
+  aahNumber: "AAH-2024-75123456"
+};
+
+// Rendez-vous à venir
+const appointments = [
+  { date: "05/03/2026", time: "14:30", type: "Suivi psychiatrique", location: "CMP Villeneuve-sur-Lot", specialist: "Dr. Martin" },
+  { date: "30/03/2026", time: "09:15", type: "Bilan biologique", location: "Laboratoire BioSanté", specialist: "Prélèvement sanguin" },
+  { date: "27/04/2026", time: "11:00", type: "Consultation sociale", location: "Mairie de Villeneuve", specialist: "Négâr REZAI ARIA" },
+  { date: "26/05/2026", time: "10:30", type: "Évaluation cognitive", location: "CMP Villeneuve-sur-Lot", specialist: "Dr. Dubois" },
+  { date: "22/06/2026", time: "15:00", type: "Suivi AAH", location: "MDPH 47", specialist: "Conseiller MDPH" }
+];
+
+// Alertes biologiques
+const biologicalAlerts = [
+  { type: "Transaminases", value: "45 U/L", normalRange: "5-40 U/L", status: "Élevé", severity: "modéré", lastCheck: "15/02/2026" },
+  { type: "GGT (Gamma-GT)", value: "32 U/L", normalRange: "8-61 U/L", status: "Normal", severity: "aucun", lastCheck: "15/02/2026" },
+  { type: "Bilirubine", value: "8 µmol/L", normalRange: "3-20 µmol/L", status: "Normal", severity: "aucun", lastCheck: "15/02/2026" },
+  { type: "Créatinine", value: "88 µmol/L", normalRange: "60-110 µmol/L", status: "Normal", severity: "aucun", lastCheck: "15/02/2026" }
+];
+
+// Traitements en cours
+const currentTreatments = [
+  { name: "Escitalopram", dosage: "15mg", frequency: "1x/jour", startDate: "15/11/2024", prescribingDoctor: "Dr. Martin" },
+  { name: "Agomélatine", dosage: "25mg", frequency: "1x/jour (soir)", startDate: "15/11/2024", prescribingDoctor: "Dr. Martin" },
+  { name: "Mélatonine", dosage: "2mg", frequency: "Au coucher", startDate: "01/12/2024", prescribingDoctor: "Dr. Dubois" }
+];
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<MainLayout title="Accueil">
+  <div class="container">
+    <!-- En-tête de page -->
+    <header class="page-header">
+      <h1>Dossier Médical Numérique</h1>
+      <p class="subtitle">Suivi global de Frédéric HAUGUEL</p>
+    </header>
+
+    <!-- Section Identité -->
+    <section class="identity-section card">
+      <h2>Identité Patient</h2>
+      <div class="identity-grid">
+        <div class="identity-item">
+          <span class="label">Nom complet:</span>
+          <span class="value">{patient.name}</span>
+        </div>
+        <div class="identity-item">
+          <span class="label">Date de naissance:</span>
+          <span class="value">{patient.birthDate} (Âge: {patient.age} ans)</span>
+        </div>
+        <div class="identity-item">
+          <span class="label">Statut AAH:</span>
+          <span class="value">{patient.aahStatus}</span>
+        </div>
+        <div class="identity-item">
+          <span class="label">Échéance AAH:</span>
+          <span class="value">{patient.aahExpiry}</span>
+        </div>
+        <div class="identity-item">
+          <span class="label">Numéro AAH:</span>
+          <span class="value">{patient.aahNumber}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Dashboard -->
+    <div class="dashboard-grid">
+      <!-- Calendrier des RDV -->
+      <section class="appointments-section card">
+        <h2>Prochains Rendez-vous</h2>
+        <div class="appointments-list">
+          {appointments.map((appointment, index) => (
+            <div class={`appointment-item ${index === 0 ? 'next-appointment' : ''}`}>
+              <div class="appointment-date">
+                <span class="day">{appointment.date.split('/')[0]}</span>
+                <span class="month">{appointment.date.split('/')[1]}</span>
+              </div>
+              <div class="appointment-details">
+                <h3>{appointment.type}</h3>
+                <p><strong>Heure:</strong> {appointment.time}</p>
+                <p><strong>Lieu:</strong> {appointment.location}</p>
+                <p><strong>Spécialiste:</strong> {appointment.specialist}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Alertes Biologiques -->
+      <section class="alerts-section card">
+        <h2>Alertes Biologiques</h2>
+        <div class="alerts-list">
+          {biologicalAlerts.map(alert => (
+            <div class={`alert-item alert-${alert.status === 'Élevé' ? 'danger' : alert.status === 'Normal' ? 'success' : 'warning'}`}>
+              <div class="alert-header">
+                <h3>{alert.type}</h3>
+                <span class={`status-badge ${alert.severity}`}>{alert.status}</span>
+              </div>
+              <div class="alert-details">
+                <p><strong>Valeur:</strong> {alert.value} (Normale: {alert.normalRange})</p>
+                <p><strong>Dernier contrôle:</strong> {alert.lastCheck}</p>
+                <p><strong>Sévérité:</strong> {alert.severity}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+
+    <!-- Section Traitements -->
+    <section class="treatments-section card">
+      <h2>Traitements en cours</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Médicament</th>
+            <th>Dosage</th>
+            <th>Fréquence</th>
+            <th>Début</th>
+            <th>Prescrit par</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentTreatments.map(treatment => (
+            <tr>
+              <td>{treatment.name}</td>
+              <td>{treatment.dosage}</td>
+              <td>{treatment.frequency}</td>
+              <td>{treatment.startDate}</td>
+              <td>{treatment.prescribingDoctor}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="quick-actions">
+      <h2>Actions rapides</h2>
+      <div class="actions-grid">
+        <a href="/clinique" class="action-card">
+          <h3>Voir Bilan Clinique</h3>
+          <p>Diagnostics et évaluations</p>
+        </a>
+        <a href="/parcours" class="action-card">
+          <h3>Consulter Anamnèse</h3>
+          <p>Historique chronologique</p>
+        </a>
+        <a href="/archives" class="action-card">
+          <h3>Télécharger Documents</h3>
+          <p>Bilans et rapports PDF</p>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Styles spécifiques à la page -->
+  <style>
+    .page-header {
+      text-align: center;
+      margin-bottom: var(--spacing-lg);
+      padding: var(--spacing-lg) 0;
+      border-bottom: 2px solid var(--color-secondary);
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--color-secondary);
+      margin-top: var(--spacing-sm);
+    }
+
+    .identity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    .identity-item {
+      background-color: #f8f9fa;
+      padding: var(--spacing-sm);
+      border-radius: var(--border-radius);
+      border-left: 4px solid var(--color-secondary);
+    }
+
+    .label {
+      display: block;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .value {
+      font-size: 1.1rem;
+      color: var(--color-dark);
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-lg);
+      margin: var(--spacing-lg) 0;
+    }
+
+    .appointments-list, .alerts-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+
+    .appointment-item {
+      display: flex;
+      gap: var(--spacing-md);
+      padding: var(--spacing-md);
+      background-color: white;
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+      transition: var(--transition);
+    }
+
+    .appointment-item:hover {
+      border-color: var(--color-secondary);
+      box-shadow: var(--box-shadow);
+    }
+
+    .appointment-item.next-appointment {
+      border-left: 4px solid var(--color-accent);
+      background-color: #fff8f8;
+    }
+
+    .appointment-date {
+      background-color: var(--color-secondary);
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: var(--border-radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    .day {
+      font-size: 1.5rem;
+    }
+
+    .month {
+      font-size: 0.8rem;
+    }
+
+    .alert-item {
+      padding: var(--spacing-md);
+      border-radius: var(--border-radius);
+    }
+
+    .alert-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .status-badge {
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .status-badge.modéré {
+      background-color: var(--color-warning);
+      color: white;
+    }
+
+    .status-badge.aucun {
+      background-color: var(--color-success);
+      color: white;
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    .action-card {
+      background-color: white;
+      padding: var(--spacing-lg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      text-align: center;
+      transition: var(--transition);
+      text-decoration: none;
+      color: var(--color-dark);
+    }
+
+    .action-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-card h3 {
+      color: var(--color-secondary);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .identity-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</MainLayout>

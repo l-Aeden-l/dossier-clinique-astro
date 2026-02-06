@@ -1,0 +1,683 @@
+---
+// Page Archives et Documents
+import MainLayout from '../layouts/MainLayout.astro';
+
+// Catégories de documents
+const documentCategories = [
+  {
+    id: "medical",
+    title: "Documents Médicaux",
+    description: "Bilans, évaluations et rapports médicaux",
+    icon: "🏥",
+    documents: [
+      {
+        id: "ados-2024",
+        title: "Bilan ADOS-2 complet",
+        description: "Évaluation diagnostique TSA avec score détaillé (2024)",
+        date: "15/03/2024",
+        size: "2.4 MB",
+        format: "PDF",
+        pages: 18,
+        author: "Dr. Sophie Martin",
+        downloadLink: "/documents/ados-2024.pdf",
+        previewAvailable: true
+      },
+      {
+        id: "psychiatric-report-2024",
+        title: "Compte-rendu psychiatrique",
+        description: "Synthèse du suivi psychiatrique et recommandations thérapeutiques",
+        date: "15/11/2024",
+        size: "1.8 MB",
+        format: "PDF",
+        pages: 12,
+        author: "Dr. Sophie Martin",
+        downloadLink: "/documents/psychiatric-report-2024.pdf",
+        previewAvailable: true
+      },
+      {
+        id: "beck-evaluations-2026",
+        title: "Évaluations psychométriques",
+        description: "Résultats des questionnaires de Beck (dépression et anxiété)",
+        date: "15/01/2026",
+        size: "1.2 MB",
+        format: "PDF",
+        pages: 8,
+        author: "Dr. Dubois",
+        downloadLink: "/documents/beck-evaluations-2026.pdf",
+        previewAvailable: true
+      },
+      {
+        id: "cognitive-assessment",
+        title: "Bilan cognitif complet",
+        description: "Évaluation des fonctions cognitives et profil neuropsychologique",
+        date: "20/02/2025",
+        size: "3.1 MB",
+        format: "PDF",
+        pages: 22,
+        author: "Dr. Laurent",
+        downloadLink: "/documents/cognitive-assessment.pdf",
+        previewAvailable: false
+      }
+    ]
+  },
+  {
+    id: "social",
+    title: "Documents Sociaux et Administratifs",
+    description: "Dossiers administratifs, demandes et notifications",
+    icon: "📋",
+    documents: [
+      {
+        id: "aah-notification",
+        title: "Notification AAH",
+        description: "Décision d'attribution de l'Allocation Adulte Handicapé",
+        date: "15/10/2024",
+        size: "0.8 MB",
+        format: "PDF",
+        pages: 4,
+        author: "MDPH 47",
+        downloadLink: "/documents/aah-notification.pdf",
+        previewAvailable: true
+      },
+      {
+        id: "hlm-application",
+        title: "Demande de logement social",
+        description: "Dossier complet de demande HLM avec pièces jointes",
+        date: "15/01/2025",
+        size: "4.2 MB",
+        format: "PDF",
+        pages: 28,
+        author: "CMS Villeneuve-sur-Lot",
+        downloadLink: "/documents/hlm-application.pdf",
+        previewAvailable: true
+      },
+      {
+        id: "social-report",
+        title: "Rapport social complet",
+        description: "Évaluation sociale et plan d'accompagnement personnalisé",
+        date: "05/06/2025",
+        size: "2.1 MB",
+        format: "PDF",
+        pages: 15,
+        author: "Négâr REZAI ARIA",
+        downloadLink: "/documents/social-report.pdf",
+        previewAvailable: true
+      },
+      {
+        id: "volunteer-contract",
+        title: "Contrat d'engagement bénévole",
+        description: "Convention de bénévolat avec Byblos et Bénévoles du 47",
+        date: "10/03/2025",
+        size: "0.5 MB",
+        format: "PDF",
+        pages: 3,
+        author: "Byblos",
+        downloadLink: "/documents/volunteer-contract.pdf",
+        previewAvailable: true
+      }
+    ]
+  },
+  {
+    id: "personal",
+    title: "Récits et Documents Personnels",
+    description: "Témoignages, récits de vie et productions personnelles",
+    icon: "📖",
+    documents: [
+      {
+        id: "life-story",
+        title: "Récit de vie autobiographique",
+        description: "Histoire de vie complète de 1979 à aujourd'hui",
+        date: "15/12/2025",
+        size: "3.8 MB",
+        format: "PDF",
+        pages: 45,
+        author: "Frédéric HAUGUEL",
+        downloadLink: "/documents/life-story.pdf",
+        previewAvailable: true
+      },
+      {
+        id: "therapy-journal",
+        title: "Journal thérapeutique (extraits)",
+        description: "Sélection d'extraits du journal personnel (2024-2026)",
+        date: "30/01/2026",
+        size: "2.7 MB",
+        format: "PDF",
+        pages: 32,
+        author: "Frédéric HAUGUEL",
+        downloadLink: "/documents/therapy-journal.pdf",
+        previewAvailable: false
+      },
+      {
+        id: "testimonials",
+        title: "Témoignages d'intervenants",
+        description: "Recueil de témoignages de professionnels et proches",
+        date: "28/02/2026",
+        size: "1.5 MB",
+        format: "PDF",
+        pages: 10,
+        author: "Collectif",
+        downloadLink: "/documents/testimonials.pdf",
+        previewAvailable: true
+      },
+      {
+        id: "project-proposal",
+        title: "Projet de vie et objectifs",
+        description: "Document de présentation du projet associatif et personnel",
+        date: "15/02/2026",
+        size: "2.3 MB",
+        format: "PDF",
+        pages: 18,
+        author: "Frédéric HAUGUEL",
+        downloadLink: "/documents/project-proposal.pdf",
+        previewAvailable: true
+      }
+    ]
+  },
+  {
+    id: "legal",
+    title: "Documents Légaux",
+    description: "Documents juridiques et officiels",
+    icon: "⚖️",
+    documents: [
+      {
+        id: "consent-form",
+        title: "Formulaire de consentement",
+        description: "Consentement éclairé pour le partage des données médicales",
+        date: "15/03/2024",
+        size: "0.3 MB",
+        format: "PDF",
+        pages: 2,
+        author: "CMP Villeneuve-sur-Lot",
+        downloadLink: "/documents/consent-form.pdf",
+        previewAvailable: true
+      },
+      {
+        id: "privacy-policy",
+        title: "Politique de confidentialité",
+        description: "Engagement de protection des données personnelles",
+        date: "01/01/2026",
+        size: "0.4 MB",
+        format: "PDF",
+        pages: 3,
+        author: "Dossier Médical Numérique",
+        downloadLink: "/documents/privacy-policy.pdf",
+        previewAvailable: true
+      }
+    ]
+  }
+];
+
+// Statistiques des archives
+const archiveStats = {
+  totalDocuments: documentCategories.reduce((sum, category) => sum + category.documents.length, 0),
+  totalSize: "18.7 MB",
+  categories: documentCategories.length,
+  mostRecent: "30/01/2026",
+  averageSize: "1.8 MB",
+  pages: 124
+};
+
+// Fonction pour formater la taille
+function formatSize(sizeMB: string) {
+  return `${sizeMB} MB`;
+}
+---
+
+<MainLayout title="Archives et Documents">
+  <div class="container">
+    <!-- En-tête -->
+    <header class="page-header">
+      <h1>Centre de Documents et Archives</h1>
+      <p class="subtitle">Bibliothèque complète des documents médicaux, sociaux et personnels</p>
+    </header>
+
+    <!-- Navigation secondaire -->
+    <nav class="secondary-nav" aria-label="Navigation archives">
+      <ul>
+        <li><a href="#stats">Statistiques</a></li>
+        <li><a href="#medical">Documents Médicaux</a></li>
+        <li><a href="#social">Documents Sociaux</a></li>
+        <li><a href="#personal">Documents Personnels</a></li>
+        <li><a href="#legal">Documents Légaux</a></li>
+      </ul>
+    </nav>
+
+    <!-- Section Statistiques -->
+    <section id="stats" class="stats-section card">
+      <h2>Statistiques des Archives</h2>
+
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value">{archiveStats.totalDocuments}</div>
+          <div class="stat-label">Documents totaux</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">{archiveStats.totalSize}</div>
+          <div class="stat-label">Espace total</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">{archiveStats.categories}</div>
+          <div class="stat-label">Catégories</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">{archiveStats.pages}</div>
+          <div class="stat-label">Pages totales</div>
+        </div>
+      </div>
+
+      <div class="stats-chart">
+        <h3>Répartition par catégorie</h3>
+        <div class="chart-container">
+          <div class="chart-bar medical" style="width: 40%">
+            <span>Médical (4)</span>
+          </div>
+          <div class="chart-bar social" style="width: 30%; left: 40%">
+            <span>Social (4)</span>
+          </div>
+          <div class="chart-bar personal" style="width: 25%; left: 70%">
+            <span>Personnel (4)</span>
+          </div>
+          <div class="chart-bar legal" style="width: 5%; left: 95%">
+            <span>Légal (2)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sections par catégorie -->
+    {documentCategories.map(category => (
+      <section id={category.id} class="category-section card">
+        <h2>{category.icon} {category.title}</h2>
+        <p class="category-description">{category.description}</p>
+
+        <div class="documents-grid">
+          {category.documents.map(doc => (
+            <div class="document-card">
+              <div class="document-header">
+                <h3>{doc.title}</h3>
+                <span class="document-format">{doc.format}</span>
+              </div>
+              <div class="document-meta">
+                <span class="meta-item">📅 {doc.date}</span>
+                <span class="meta-item">📄 {doc.pages} pages</span>
+                <span class="meta-item">💾 {doc.size}</span>
+              </div>
+              <div class="document-description">
+                <p>{doc.description}</p>
+                <p class="document-author">Auteur: {doc.author}</p>
+              </div>
+              <div class="document-actions">
+                <a href={doc.downloadLink} class="btn btn-sm" download>
+                  📥 Télécharger
+                </a>
+                {doc.previewAvailable && (
+                  <a href={doc.downloadLink} class="btn btn-sm btn-outline" target="_blank">
+                    👁️ Prévisualiser
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <!-- Section Recherche -->
+    <section class="search-section card">
+      <h2>Recherche Avancée</h2>
+
+      <div class="search-form">
+        <div class="form-group">
+          <label for="search-query">Mots-clés</label>
+          <input type="text" id="search-query" placeholder="Rechercher dans les documents...">
+        </div>
+
+        <div class="form-group">
+          <label for="search-category">Catégorie</label>
+          <select id="search-category">
+            <option value="">Toutes les catégories</option>
+            {documentCategories.map(category => (
+              <option value={category.id}>{category.title}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="search-date">Période</label>
+          <select id="search-date">
+            <option value="">Toutes les périodes</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+          </select>
+        </div>
+
+        <button class="btn">Rechercher</button>
+      </div>
+
+      <div class="search-tips">
+        <h3>Conseils de recherche</h3>
+        <ul>
+          <li>Utilisez des mots-clés spécifiques (ex: "ADOS-2", "AAH")</li>
+          <li>Filtrez par catégorie pour des résultats plus pertinents</li>
+          <li>Consultez les documents récents pour les informations à jour</li>
+          <li>Les documents avec aperçu sont marqués d'un symbole 👁️</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Section Gestion des Documents -->
+    <section class="management-section card">
+      <h2>Gestion des Archives</h2>
+
+      <div class="management-info">
+        <h3>Comment utiliser cette section</h3>
+        <p>Cette bibliothèque de documents est conçue pour un accès facile et sécurisé à tous les documents importants liés au suivi médical et social.</p>
+
+        <div class="management-features">
+          <div class="feature-item">
+            <h4>🔒 Sécurité</h4>
+            <p>Tous les documents sont protégés et accessibles uniquement aux personnes autorisées.</p>
+          </div>
+          <div class="feature-item">
+            <h4>📱 Accessibilité</h4>
+            <p>Les documents sont optimisés pour une lecture sur tous les appareils.</p>
+          </div>
+          <div class="feature-item">
+            <h4>🔍 Organisation</h4>
+            <p>Classement clair par catégories et dates pour un accès rapide.</p>
+          </div>
+          <div class="feature-item">
+            <h4>📤 Export</h4>
+            <p>Possibilité de télécharger les documents pour un usage hors ligne.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="management-actions">
+        <h3>Actions disponibles</h3>
+        <div class="actions-grid">
+          <div class="action-card">
+            <h4>📤 Télécharger tout</h4>
+            <p>Obtenir une archive complète</p>
+            <button class="btn btn-outline">Télécharger ZIP</button>
+          </div>
+          <div class="action-card">
+            <h4>📋 Demander un document</h4>
+            <p>Requête pour un document spécifique</p>
+            <button class="btn btn-outline">Faire une demande</button>
+          </div>
+          <div class="action-card">
+            <h4>🔄 Mettre à jour</h4>
+            <p>Actualiser la liste des documents</p>
+            <button class="btn btn-outline">Rafraîchir</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Aide -->
+    <section class="help-section card">
+      <h2>Besoin d'Aide ?</h2>
+
+      <div class="help-grid">
+        <div class="help-item">
+          <h3>📞 Assistance Technique</h3>
+          <p>Pour les problèmes de téléchargement ou d'accès</p>
+          <p><strong>Contact:</strong> support@dossier-medical.fr</p>
+        </div>
+        <div class="help-item">
+          <h3>📋 Demande de Document</h3>
+          <p>Pour demander l'ajout d'un document</p>
+          <p><strong>Contact:</strong> archives@dossier-medical.fr</p>
+        </div>
+        <div class="help-item">
+          <h3>🔒 Confidentialité</h3>
+          <p>Pour les questions de protection des données</p>
+          <p><strong>Contact:</strong> dpo@dossier-medical.fr</p>
+        </div>
+      </div>
+
+      <div class="help-note">
+        <p><strong>Note:</strong> Tous les documents sont protégés par le secret médical et ne peuvent être partagés sans consentement écrit.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Styles spécifiques -->
+  <style>
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: var(--spacing-md);
+      background-color: white;
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--color-secondary);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .stat-label {
+      color: var(--color-primary);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .chart-container {
+      height: 40px;
+      position: relative;
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+      margin: var(--spacing-sm) 0;
+    }
+
+    .chart-bar {
+      position: absolute;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .chart-bar.medical {
+      background-color: var(--color-danger);
+    }
+
+    .chart-bar.social {
+      background-color: var(--color-warning);
+    }
+
+    .chart-bar.personal {
+      background-color: var(--color-success);
+    }
+
+    .chart-bar.legal {
+      background-color: var(--color-primary);
+    }
+
+    .category-section {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .category-description {
+      color: var(--color-primary);
+      margin-bottom: var(--spacing-md);
+      font-style: italic;
+    }
+
+    .documents-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    .document-card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .document-card:hover {
+      box-shadow: var(--box-shadow);
+      transform: translateY(-2px);
+    }
+
+    .document-header {
+      background-color: var(--color-primary);
+      color: white;
+      padding: var(--spacing-sm) var(--spacing-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .document-format {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .document-meta {
+      background-color: #f8f9fa;
+      padding: var(--spacing-sm) var(--spacing-md);
+      display: flex;
+      gap: var(--spacing-md);
+      border-bottom: 1px solid #ddd;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      font-size: 0.9rem;
+      color: var(--color-primary);
+    }
+
+    .document-description {
+      padding: var(--spacing-md);
+    }
+
+    .document-author {
+      font-size: 0.8rem;
+      color: var(--color-secondary);
+      margin-top: var(--spacing-sm);
+      font-style: italic;
+    }
+
+    .document-actions {
+      background-color: white;
+      padding: var(--spacing-sm) var(--spacing-md);
+      display: flex;
+      gap: var(--spacing-sm);
+      border-top: 1px solid #ddd;
+    }
+
+    .search-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+
+    .form-group label {
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: var(--spacing-sm);
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-family: var(--font-primary);
+    }
+
+    .search-tips {
+      background-color: #f8f9fa;
+      padding: var(--spacing-md);
+      border-radius: var(--border-radius);
+    }
+
+    .management-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-md);
+      margin: var(--spacing-md) 0;
+    }
+
+    .feature-item {
+      text-align: center;
+      padding: var(--spacing-sm);
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    .action-card {
+      text-align: center;
+      padding: var(--spacing-md);
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+    }
+
+    .help-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    .help-item {
+      background-color: white;
+      padding: var(--spacing-md);
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+    }
+
+    .help-note {
+      background-color: var(--color-warning);
+      color: var(--color-dark);
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--border-radius);
+      margin-top: var(--spacing-md);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid,
+      .documents-grid,
+      .search-form,
+      .management-features,
+      .actions-grid,
+      .help-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</MainLayout>

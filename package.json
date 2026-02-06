@@ -10,5 +10,8 @@
   },
   "dependencies": {
     "astro": "^5.17.1"
+  },
+  "overrides": {
+    "estree-walker": "3.0.3"
   }
 }
