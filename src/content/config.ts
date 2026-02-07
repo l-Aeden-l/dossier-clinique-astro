@@ -5,7 +5,6 @@ const parcours = defineCollection({
   schema: z.object({
     title: z.string(),
     period: z.string(),
-    content: z.string(),
     date: z.coerce.date(),
   }),
 });
