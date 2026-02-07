@@ -1,6 +1,8 @@
 ---
 // Layout principal avec menu de navigation horizontal
 import '../styles/global.css';
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <!DOCTYPE html>
@@ -9,8 +11,8 @@ import '../styles/global.css';
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Dossier Médical Numérique - Frédéric HAUGUEL" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+  <link rel="icon" href={`${base}favicon.ico`} />
   <title>Dossier Médical - {Astro.props.title || 'Accueil'}</title>
 </head>
 <body>
@@ -23,22 +25,22 @@ import '../styles/global.css';
       <nav class="main-nav" aria-label="Navigation principale">
         <ul class="nav-list">
           <li class="nav-item">
-            <a href="/" class="nav-link {Astro.url.pathname === '/' ? 'active' : ''}">Accueil</a>
+            <a href="/dossier-clinique-astro/" class="nav-link {Astro.url.pathname === '/dossier-clinique-astro/' || Astro.url.pathname === '/dossier-clinique-astro' ? 'active' : ''}">Accueil</a>
           </li>
           <li class="nav-item">
-            <a href="/clinique" class="nav-link {Astro.url.pathname === '/clinique' ? 'active' : ''}">Bilan Clinique</a>
+            <a href="/dossier-clinique-astro/clinique" class="nav-link {Astro.url.pathname.endsWith('/clinique') ? 'active' : ''}">Bilan Clinique</a>
           </li>
           <li class="nav-item">
-            <a href="/parcours" class="nav-link {Astro.url.pathname === '/parcours' ? 'active' : ''}">Anamnèse</a>
+            <a href="/dossier-clinique-astro/parcours" class="nav-link {Astro.url.pathname.endsWith('/parcours') ? 'active' : ''}">Anamnèse</a>
           </li>
           <li class="nav-item">
-            <a href="/social" class="nav-link {Astro.url.pathname === '/social' ? 'active' : ''}">Réalités Sociales</a>
+            <a href="/dossier-clinique-astro/social" class="nav-link {Astro.url.pathname.endsWith('/social') ? 'active' : ''}">Réalités Sociales</a>
           </li>
           <li class="nav-item">
-            <a href="/projet" class="nav-link {Astro.url.pathname === '/projet' ? 'active' : ''}">Projet Associatif</a>
+            <a href="/dossier-clinique-astro/projet" class="nav-link {Astro.url.pathname.endsWith('/projet') ? 'active' : ''}">Projet Associatif</a>
           </li>
           <li class="nav-item">
-            <a href="/archives" class="nav-link {Astro.url.pathname === '/archives' ? 'active' : ''}">Archives</a>
+            <a href="/dossier-clinique-astro/archives" class="nav-link {Astro.url.pathname.endsWith('/archives') ? 'active' : ''}">Archives</a>
           </li>
         </ul>
       </nav>
