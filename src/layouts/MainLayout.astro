@@ -1,149 +1,549 @@
 ---
-// Layout principal avec menu de navigation horizontal
-import '../styles/global.css';
+// LAYOUT PRINCIPAL - PORTAL DE DOCUMENTATION CLINIQUE
+// Design institutionnel inspiré CPAM/Secteur Santé
+// Accessibilité RGAA/WCAG - Police Luciole
 
-const base = import.meta.env.BASE_URL;
+import '../styles/global.css';
 ---
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Dossier Médical Numérique - Frédéric HAUGUEL" />
-  <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
-  <link rel="icon" href={`${base}favicon.ico`} />
-  <title>Dossier Médical - {Astro.props.title || 'Accueil'}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portail de Documentation Clinique - Dossier Médical Numérique" />
+  
+  <!-- Favicon institutionnel -->
+  <link rel="icon" type="image/svg+xml" href="/dossier-clinique-astro/favicon.svg" />
+  <link rel="icon" type="image/x-icon" href="/dossier-clinique-astro/favicon.ico" />
+  
+  <!-- Titre dynamique -->
+  <title>Portail Clinique - {Astro.props.title || 'Tableau de Bord'}</title>
 </head>
 <body>
   <!-- Skip link pour accessibilité -->
-  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+  <a href="#main-content" class="skip-link">
+    Aller au contenu principal
+  </a>
 
-  <!-- Header avec navigation horizontale -->
-  <header class="site-header">
+  <!-- HEADER INSTITUTIONNEL -->
+  <header class="site-header" role="banner">
     <div class="container">
+      <div class="header-content">
+        <!-- Logo/Titre institutionnel -->
+        <div class="header-brand">
+          <h1 class="site-title">
+            <a href="/dossier-clinique-astro/" class="brand-link">
+              Portail de Documentation Clinique
+            </a>
+          </h1>
+          <p class="site-subtitle">
+            Dossier Médical Numérique - Frédéric HAUGUEL
+          </p>
+        </div>
+
+        <!-- Informations patient (header) -->
+        <div class="patient-header-info">
+          <div class="patient-badge">
+            <span class="badge badge-primary">AAH</span>
+            <span>Bénéficiaire depuis novembre 2024</span>
+          </div>
+          <div class="patient-badge">
+            <span class="badge badge-warning">Échéance</span>
+            <span>10/2026</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation principale horizontale -->
       <nav class="main-nav" aria-label="Navigation principale">
         <ul class="nav-list">
           <li class="nav-item">
-            <a href="/dossier-clinique-astro/" class="nav-link {Astro.url.pathname === '/dossier-clinique-astro/' || Astro.url.pathname === '/dossier-clinique-astro' ? 'active' : ''}">Accueil</a>
+            <a 
+              href="/dossier-clinique-astro/" 
+              class="nav-link {Astro.url.pathname === '/dossier-clinique-astro/' || Astro.url.pathname === '/dossier-clinique-astro' ? 'active' : ''}"
+            >
+              <span class="nav-icon">📊</span>
+              Tableau de Bord
+            </a>
           </li>
           <li class="nav-item">
-            <a href="/dossier-clinique-astro/clinique" class="nav-link {Astro.url.pathname.endsWith('/clinique') ? 'active' : ''}">Bilan Clinique</a>
+            <a 
+              href="/dossier-clinique-astro/clinique" 
+              class="nav-link {Astro.url.pathname.includes('/clinique') ? 'active' : ''}"
+            >
+              <span class="nav-icon">🏥</span>
+              Profil Clinique
+            </a>
           </li>
           <li class="nav-item">
-            <a href="/dossier-clinique-astro/parcours" class="nav-link {Astro.url.pathname.endsWith('/parcours') ? 'active' : ''}">Anamnèse</a>
+            <a 
+              href="/dossier-clinique-astro/parcours" 
+              class="nav-link {Astro.url.pathname.includes('/parcours') ? 'active' : ''}"
+            >
+              <span class="nav-icon">📅</span>
+              Anamnèse Chronologique
+            </a>
           </li>
           <li class="nav-item">
-            <a href="/dossier-clinique-astro/social" class="nav-link {Astro.url.pathname.endsWith('/social') ? 'active' : ''}">Réalités Sociales</a>
+            <a 
+              href="/dossier-clinique-astro/social" 
+              class="nav-link {Astro.url.pathname.includes('/social') ? 'active' : ''}"
+            >
+              <span class="nav-icon">🏠</span>
+              Réalité Sociale
+            </a>
           </li>
           <li class="nav-item">
-            <a href="/dossier-clinique-astro/projet" class="nav-link {Astro.url.pathname.endsWith('/projet') ? 'active' : ''}">Projet Associatif</a>
-          </li>
-          <li class="nav-item">
-            <a href="/dossier-clinique-astro/archives" class="nav-link {Astro.url.pathname.endsWith('/archives') ? 'active' : ''}">Archives</a>
+            <a 
+              href="/dossier-clinique-astro/projet" 
+              class="nav-link {Astro.url.pathname.includes('/projet') ? 'active' : ''}"
+            >
+              <span class="nav-icon">💻</span>
+              Pôle Numérique
+            </a>
           </li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <!-- Contenu principal -->
-  <main id="main-content" class="main-content">
-    <slot />
+  <!-- Fil d'Ariane (Breadcrumbs) -->
+  <nav class="breadcrumb" aria-label="Fil d'Ariane">
+    <div class="container">
+      <ol class="breadcrumb-list">
+        <li class="breadcrumb-item">
+          <a href="/dossier-clinique-astro/">Accueil</a>
+        </li>
+        {Astro.props.breadcrumbs && Astro.props.breadcrumbs.map((item, index) => (
+          <li class="breadcrumb-item">
+            {item.url ? (
+              <a href={item.url}>{item.label}</a>
+            ) : (
+              <span aria-current="page">{item.label}</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </div>
+  </nav>
+
+  <!-- CONTENU PRINCIPAL -->
+  <main id="main-content" class="main-content" role="main">
+    <div class="container">
+      <!-- Hero Section conditionnelle -->
+      {Astro.props.showHero && (
+        <section class="hero-section">
+          <div class="hero-content">
+            <h2 class="hero-title">{Astro.props.heroTitle || 'Tableau de Bord Clinique'}</h2>
+            <p class="hero-description">
+              {Astro.props.heroDescription || 'Portail de documentation et suivi médical'}
+            </p>
+          </div>
+        </section>
+      )}
+
+      <!-- Slot pour le contenu spécifique à chaque page -->
+      <slot />
+    </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
+  <!-- FOOTER INSTITUTIONNEL -->
+  <footer class="site-footer" role="contentinfo">
     <div class="container">
-      <p>&copy; {new Date().getFullYear()} - Dossier Médical Numérique | Frédéric HAUGUEL</p>
-      <p>Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}</p>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3 class="footer-title">Portail de Documentation Clinique</h3>
+          <p>Dossier Médical Numérique - Usage professionnel</p>
+        </div>
+        
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Informations légales</h4>
+          <ul class="footer-links">
+            <li><a href="#">Confidentialité médicale</a></li>
+            <li><a href="#">RGPD - Protection des données</a></li>
+            <li><a href="#">Mentions légales</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Contact</h4>
+          <p>Pour toute question concernant ce dossier :</p>
+          <p class="footer-contact">contact@dossier-medical.fr</p>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="copyright">
+          &copy; {new Date().getFullYear()} - Portail de Documentation Clinique | 
+          Dernière mise à jour : {new Date().toLocaleDateString('fr-FR', { 
+            day: '2-digit', 
+            month: '2-digit', 
+            year: 'numeric' 
+          })}
+        </p>
+        <p class="footer-note">
+          Ce portail respecte les normes d'accessibilité RGAA/WCAG et utilise la police Luciole pour une meilleure lisibilité.
+        </p>
+      </div>
     </div>
   </footer>
 
   <!-- Styles spécifiques au layout -->
   <style>
+    /* ----------------------------------------------------------------------
+       HEADER INSTITUTIONNEL
+       ---------------------------------------------------------------------- */
     .site-header {
-      background-color: var(--color-primary);
-      color: white;
-      padding: var(--spacing-sm) 0;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      background-color: var(--color-white);
+      border-bottom: 3px solid var(--color-primary);
+      box-shadow: var(--shadow-md);
       position: sticky;
       top: 0;
-      z-index: 1000;
+      z-index: var(--z-sticky);
     }
 
-    .main-nav {
+    .header-content {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--spacing-md) 0;
+      flex-wrap: wrap;
+      gap: var(--spacing-md);
+    }
+
+    .header-brand {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .site-title {
+      font-size: 1.5rem;
+      margin-bottom: var(--spacing-xs);
+      color: var(--color-primary);
+    }
+
+    .brand-link {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .brand-link:hover {
+      text-decoration: underline;
+    }
+
+    .site-subtitle {
+      font-size: 0.875rem;
+      color: var(--color-gray-600);
+      margin-bottom: 0;
+    }
+
+    .patient-header-info {
+      display: flex;
+      gap: var(--spacing-md);
+      align-items: center;
+    }
+
+    .patient-badge {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      font-size: 0.875rem;
+      color: var(--color-gray-700);
+    }
+
+    /* ----------------------------------------------------------------------
+       NAVIGATION PRINCIPALE
+       ---------------------------------------------------------------------- */
+    .main-nav {
+      border-top: 1px solid var(--color-gray-200);
+      padding: var(--spacing-sm) 0;
     }
 
     .nav-list {
       display: flex;
       list-style: none;
-      gap: var(--spacing-lg);
+      gap: var(--spacing-md);
+      margin: 0;
+      padding: 0;
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .nav-item {
+      flex-shrink: 0;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      padding: var(--spacing-sm) var(--spacing-md);
+      color: var(--color-gray-700);
+      text-decoration: none;
+      border-radius: var(--border-radius-md);
+      transition: all var(--transition-base);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      background-color: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+
+    .nav-link.active {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+      font-weight: 600;
+    }
+
+    .nav-icon {
+      font-size: 1.125rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       FIL D'ARIANE
+       ---------------------------------------------------------------------- */
+    .breadcrumb {
+      background-color: var(--color-gray-50);
+      border-bottom: 1px solid var(--color-gray-200);
+      padding: var(--spacing-sm) 0;
+    }
+
+    .breadcrumb-list {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+      gap: var(--spacing-xs);
+    }
+
+    .breadcrumb-item {
+      display: flex;
+      align-items: center;
+      font-size: 0.875rem;
+      color: var(--color-gray-600);
+    }
+
+    .breadcrumb-item:not(:last-child)::after {
+      content: "›";
+      margin: 0 var(--spacing-xs);
+      color: var(--color-gray-400);
+    }
+
+    .breadcrumb-item a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    .breadcrumb-item a:hover {
+      text-decoration: underline;
+    }
+
+    .breadcrumb-item span[aria-current="page"] {
+      color: var(--color-gray-700);
+      font-weight: 600;
+    }
+
+    /* ----------------------------------------------------------------------
+       HERO SECTION
+       ---------------------------------------------------------------------- */
+    .hero-section {
+      background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-white) 100%);
+      border-radius: var(--border-radius-lg);
+      padding: var(--spacing-xl) var(--spacing-lg);
+      margin: var(--spacing-lg) 0;
+      border: 1px solid var(--color-gray-200);
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      color: var(--color-primary);
+      margin-bottom: var(--spacing-md);
+      border-bottom: none;
+    }
+
+    .hero-description {
+      font-size: 1.125rem;
+      color: var(--color-gray-700);
+      max-width: 60ch;
+      margin-bottom: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       CONTENU PRINCIPAL
+       ---------------------------------------------------------------------- */
+    .main-content {
+      padding: var(--spacing-xl) 0;
+      min-height: 60vh;
+    }
+
+    /* ----------------------------------------------------------------------
+       FOOTER INSTITUTIONNEL
+       ---------------------------------------------------------------------- */
+    .site-footer {
+      background-color: var(--color-gray-900);
+      color: var(--color-gray-300);
+      padding: var(--spacing-xl) 0 var(--spacing-lg);
+      margin-top: var(--spacing-2xl);
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-xl);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .footer-title {
+      font-size: 1.25rem;
+      color: var(--color-white);
+      margin-bottom: var(--spacing-sm);
+      border-bottom: none;
+    }
+
+    .footer-subtitle {
+      font-size: 1rem;
+      color: var(--color-gray-300);
+      margin-bottom: var(--spacing-sm);
+      border-bottom: none;
+    }
+
+    .footer-links {
+      list-style: none;
       margin: 0;
       padding: 0;
     }
 
-    .nav-item {
-      position: relative;
+    .footer-links li {
+      margin-bottom: var(--spacing-xs);
     }
 
-    .nav-link {
-      color: white;
-      font-weight: 600;
-      padding: var(--spacing-sm) var(--spacing-md);
-      border-radius: var(--border-radius);
-      transition: var(--transition);
-      position: relative;
-    }
-
-    .nav-link:hover, .nav-link:focus {
-      background-color: var(--color-secondary);
+    .footer-links a {
+      color: var(--color-gray-400);
       text-decoration: none;
+      transition: color var(--transition-fast);
     }
 
-    .nav-link.active {
-      background-color: var(--color-secondary);
-      font-weight: 700;
+    .footer-links a:hover {
+      color: var(--color-white);
+      text-decoration: underline;
     }
 
-    .nav-link.active::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 6px;
-      height: 6px;
-      background-color: white;
-      border-radius: 50%;
+    .footer-contact {
+      font-weight: 600;
+      color: var(--color-white);
+      margin-top: var(--spacing-xs);
     }
 
-    .main-content {
-      min-height: calc(100vh - 120px);
-      padding: var(--spacing-lg) 0;
-    }
-
-    .site-footer {
-      background-color: var(--color-dark);
-      color: white;
-      padding: var(--spacing-md) 0;
+    .footer-bottom {
+      border-top: 1px solid var(--color-gray-700);
+      padding-top: var(--spacing-lg);
       text-align: center;
-      margin-top: var(--spacing-lg);
     }
 
-    /* Responsive navigation */
+    .copyright {
+      font-size: 0.875rem;
+      color: var(--color-gray-500);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .footer-note {
+      font-size: 0.75rem;
+      color: var(--color-gray-600);
+      margin-bottom: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       RESPONSIVE DESIGN
+       ---------------------------------------------------------------------- */
     @media (max-width: 768px) {
-      .nav-list {
+      .header-content {
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+      }
+
+      .header-brand {
+        min-width: auto;
+        width: 100%;
+      }
+
+      .patient-header-info {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .nav-list {
         gap: var(--spacing-sm);
       }
 
       .nav-link {
-        display: block;
-        text-align: center;
+        padding: var(--spacing-sm);
+        font-size: 0.875rem;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .hero-description {
+        font-size: 1rem;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .site-title {
+        font-size: 1.25rem;
+      }
+
+      .nav-list {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+      }
+
+      .nav-item {
+        width: 100%;
+      }
+
+      .nav-link {
+        justify-content: center;
+      }
+
+      .hero-section {
+        padding: var(--spacing-lg) var(--spacing-md);
+      }
+
+      .hero-title {
+        font-size: 1.75rem;
+      }
+    }
+
+    /* ----------------------------------------------------------------------
+       IMPRESSION
+       ---------------------------------------------------------------------- */
+    @media print {
+      .site-header,
+      .breadcrumb,
+      .site-footer {
+        display: none;
+      }
+
+      .main-content {
+        padding: 0;
+      }
+
+      .hero-section {
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0 0 var(--spacing-lg);
       }
     }
   </style>

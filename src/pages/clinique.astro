@@ -1,447 +1,396 @@
 ---
-// Page Bilan Clinique
+// PAGE B : PROFIL CLINIQUE
+// Bloc Diagnostic : Score ADOS-2 (Total : 11)
+// Bloc Pharmacopée : Tableau comparatif Ancien vs Nouveau traitement
+// Bloc Auto-évaluations : Emplacements pour Beck et Questionnaire Ouvert
+
 import MainLayout from '../layouts/MainLayout.astro';
 
-// Données cliniques
-const clinicalData = {
-  diagnosis: {
-    main: "Trouble du Spectre Autistique (TSA) sans déficience intellectuelle",
-    adosScore: "ADOS-2 Score: 11 (Seuil clinique atteint)",
-    diagnosisDate: "15/03/2024",
-    diagnosingClinician: "Dr. Sophie Martin, Psychiatre"
-  },
-  characteristics: [
-    "Hypersensibilité sensorielle (auditive, tactile)",
-    "Troubles Obsessionnels Compulsifs (TOC) avec rituels de vérification",
-    "Logorrhée dans situations de stress",
-    "Anxiété généralisée avec crises paniques occasionnelles",
-    "Difficultés dans la reconnaissance des émotions faciales",
-    "Intérêts spécifiques marqués (technologie, histoire)"
-  ],
-  cognitiveProfile: {
-    iqVerbal: 118,
-    iqPerformance: 105,
-    iqGlobal: 112,
-    memory: "Mémoire à long terme excellente, mémoire de travail dans la moyenne",
-    attention: "Attention soutenue difficile, distractibilité marquée"
-  }
-};
-
-// Pharmacopée comparative
-const medicationHistory = [
-  {
-    period: "Avant Novembre 2024",
-    medications: [
-      { name: "Paroxétine", dosage: "20mg", start: "01/2020", end: "10/2024", reason: "Dépression majeure", notes: "Effets secondaires: prise de poids, somnolence" }
-    ],
-    efficacy: "Partielle - amélioration de 40% des symptômes dépressifs",
-    sideEffects: ["Prise de poids (+8kg)", "Diminution libido", "Fatigue chronique"]
-  },
-  {
-    period: "Depuis Novembre 2024",
-    medications: [
-      { name: "Escitalopram", dosage: "15mg", start: "15/11/2024", end: "En cours", reason: "Dépression + anxiété", notes: "Mieux toléré que paroxétine" },
-      { name: "Agomélatine", dosage: "25mg", start: "15/11/2024", end: "En cours", reason: "Régulation rythme circadien", notes: "Amélioration du sommeil" },
-      { name: "Mélatonine", dosage: "2mg", start: "01/12/2024", end: "En cours", reason: "Insomnie", notes: "Efficacité modérée" }
-    ],
-    efficacy: "Bonne - amélioration de 70% des symptômes, meilleure tolérance",
-    sideEffects: ["Nausées initiales (résolues)", "Rêves vifs"]
-  }
+// Props pour le layout
+const pageTitle = 'Profil Clinique';
+const showHero = true;
+const heroTitle = 'Profil Clinique';
+const heroDescription = 'Diagnostics, pharmacopée et auto-évaluations';
+const breadcrumbs = [
+  { label: 'Profil Clinique' }
 ];
 
-// Évaluations psychométriques
-const evaluations = {
-  beckDepression: {
-    date: "15/01/2026",
-    score: 18,
-    interpretation: "Dépression modérée (14-19)",
-    items: [
-      { question: "Tristesse", score: 2 },
-      { question: "Pessimisme", score: 2 },
-      { question: "Sentiment d'échec", score: 1 },
-      { question: "Perte de plaisir", score: 3 },
-      { question: "Sentiment de culpabilité", score: 2 },
-      { question: "Sentiment de punition", score: 1 },
-      { question: "Auto-dépréciation", score: 2 },
-      { question: "Auto-accusations", score: 1 },
-      { question: "Idées suicidaires", score: 0 },
-      { question: "Pleurs", score: 2 },
-      { question: "Irritabilité", score: 2 }
-    ]
-  },
-  beckAnxiety: {
-    date: "15/01/2026",
-    score: 22,
-    interpretation: "Anxiété modérée (16-25)",
-    dimensions: {
-      somatic: 12,
-      cognitive: 10
-    }
-  }
+// Données pour le diagnostic ADOS-2
+const ados2Scores = {
+  total: 11,
+  domains: [
+    { name: 'Communication Sociale', score: 6, range: '0-10' },
+    { name: 'Interaction Sociale Réciproque', score: 5, range: '0-14' },
+    { name: 'Jeu et Imagination', score: 0, range: '0-8' },
+    { name: 'Comportements Stéréotypés', score: 0, range: '0-8' }
+  ],
+  date: '15/11/2024',
+  evaluator: 'Dr. Martin - CMP Villeneuve-sur-Lot',
+  interpretation: 'Score total de 11 correspondant à un diagnostic de Trouble du Spectre de l\'Autisme (TSA) de niveau 1'
 };
 
-// Questionnaire ouvert
-const openQuestions = [
-  {
-    question: "Quels sont vos principaux défis actuels ?",
-    response: "La gestion des interactions sociales non structurées et la régulation des émotions dans les environnements bruyants. Les changements de routine sont particulièrement difficiles.",
-    date: "20/01/2026"
-  },
-  {
-    question: "Quelles stratégies d'adaptation utilisez-vous ?",
-    response: "Utilisation de casques antibruit, planification rigoureuse des journées, pratique de la méditation guidée (applications), et écriture journalière pour organiser les pensées.",
-    date: "20/01/2026"
-  },
-  {
-    question: "Quels sont vos objectifs thérapeutiques ?",
-    response: "Améliorer la tolérance aux imprévus, développer des compétences en communication non verbale, et réduire la fréquence des rituels de vérification.",
-    date: "20/01/2026"
-  }
+// Données pour la pharmacopée
+const currentMedications = [
+  { name: 'Escitalopram', dosage: '15mg', frequency: '1x/jour', startDate: '15/11/2024', prescriber: 'Dr. Martin', indication: 'Traitement de fond dépression' },
+  { name: 'Agomélatine', dosage: '25mg', frequency: '1x/jour (soir)', startDate: '15/11/2024', prescriber: 'Dr. Martin', indication: 'Régulation sommeil/humeur' },
+  { name: 'Mélatonine', dosage: '2mg', frequency: 'Au coucher', startDate: '01/12/2024', prescriber: 'Dr. Dubois', indication: 'Troubles du sommeil' }
+];
+
+const previousMedications = [
+  { name: 'Paroxétine', dosage: '20mg', frequency: '1x/jour', period: '2018-2022', reason: 'Arrêt pour effets secondaires' },
+  { name: 'Sertraline', dosage: '50mg', frequency: '1x/jour', period: '2022-2024', reason: 'Efficacité insuffisante' }
 ];
 ---
 
-<MainLayout title="Bilan Clinique">
-  <div class="container">
-    <!-- En-tête -->
-    <header class="page-header">
-      <h1>Bilan Clinique Complet</h1>
-      <p class="subtitle">Évaluations diagnostiques et suivi thérapeutique</p>
-    </header>
-
-    <!-- Navigation secondaire -->
-    <nav class="secondary-nav" aria-label="Navigation clinique">
-      <ul>
-        <li><a href="#diagnostic">Diagnostic</a></li>
-        <li><a href="#characteristics">Caractéristiques</a></li>
-        <li><a href="#medication">Pharmacopée</a></li>
-        <li><a href="#evaluations">Évaluations</a></li>
-        <li><a href="#questionnaires">Questionnaires</a></li>
-      </ul>
-    </nav>
-
-    <!-- Section Diagnostic -->
-    <section id="diagnostic" class="diagnostic-section card">
-      <h2>Diagnostic Principal</h2>
-      <div class="diagnostic-info">
-        <p><strong>Diagnostic:</strong> {clinicalData.diagnosis.main}</p>
-        <p><strong>Score ADOS-2:</strong> {clinicalData.diagnosis.adosScore}</p>
-        <p><strong>Date de diagnostic:</strong> {clinicalData.diagnosis.diagnosisDate}</p>
-        <p><strong>Clinicien:</strong> {clinicalData.diagnosis.diagnosingClinician}</p>
+<MainLayout 
+  title={pageTitle} 
+  showHero={showHero}
+  heroTitle={heroTitle}
+  heroDescription={heroDescription}
+  breadcrumbs={breadcrumbs}
+>
+  <!-- Section : Diagnostic ADOS-2 -->
+  <section class="diagnostic-section card">
+    <h2>Diagnostic - Évaluation ADOS-2</h2>
+    
+    <div class="diagnostic-summary">
+      <div class="score-card">
+        <div class="score-value">{ados2Scores.total}</div>
+        <div class="score-label">Score Total ADOS-2</div>
+        <div class="score-date">Évaluation du {ados2Scores.date}</div>
       </div>
-
-      <div class="ados-explanation">
-        <h3>Interprétation ADOS-2</h3>
-        <p>Le score de 11 indique un seuil clinique clair pour le TSA. Les domaines particulièrement affectés incluent:</p>
-        <ul>
-          <li>Communication sociale et réciprocité (score: 8)</li>
-          <li>Comportements restreints et répétitifs (score: 3)</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Section Caractéristiques -->
-    <section id="characteristics" class="characteristics-section card">
-      <h2>Caractéristiques Cliniques</h2>
-      <div class="characteristics-grid">
-        {clinicalData.characteristics.map(characteristic => (
-          <div class="characteristic-item">
-            <span class="characteristic-icon">•</span>
-            <span class="characteristic-text">{characteristic}</span>
-          </div>
-        ))}
-      </div>
-
-      <div class="cognitive-profile">
-        <h3>Profil Cognitif</h3>
-        <div class="profile-grid">
-          <div class="profile-item">
-            <span class="label">QI Verbal:</span>
-            <span class="value">{clinicalData.cognitiveProfile.iqVerbal}</span>
-          </div>
-          <div class="profile-item">
-            <span class="label">QI Performance:</span>
-            <span class="value">{clinicalData.cognitiveProfile.iqPerformance}</span>
-          </div>
-          <div class="profile-item">
-            <span class="label">QI Global:</span>
-            <span class="value">{clinicalData.cognitiveProfile.iqGlobal}</span>
-          </div>
+      
+      <div class="diagnostic-details">
+        <h3>Interprétation Clinique</h3>
+        <p>{ados2Scores.interpretation}</p>
+        
+        <div class="evaluator-info">
+          <p><strong>Évaluateur :</strong> {ados2Scores.evaluator}</p>
         </div>
-        <p><strong>Mémoire:</strong> {clinicalData.cognitiveProfile.memory}</p>
-        <p><strong>Attention:</strong> {clinicalData.cognitiveProfile.attention}</p>
       </div>
-    </section>
+    </div>
 
-    <!-- Section Pharmacopée -->
-    <section id="medication" class="medication-section card">
-      <h2>Pharmacopée Comparative</h2>
-      <p class="section-intro">Comparaison des traitements avant et après novembre 2024</p>
+    <!-- Tableau des scores par domaine -->
+    <div class="domain-scores">
+      <h3>Scores par Domaine</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Domaine</th>
+            <th>Score</th>
+            <th>Plage de référence</th>
+            <th>Interprétation</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ados2Scores.domains.map((domain) => (
+            <tr>
+              <td>{domain.name}</td>
+              <td><strong>{domain.score}</strong></td>
+              <td>{domain.range}</td>
+              <td>
+                {domain.score >= 6 ? 'Significatif' : domain.score >= 3 ? 'Modéré' : 'Faible/Nul'}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="section-note">
+      <p><em>[CONTENU À REMPLIR - OBSERVATIONS COMPLÉMENTAIRES ET ÉVOLUTION]</em></p>
+    </div>
+  </section>
 
-      <div class="medication-comparison">
-        {medicationHistory.map((period, index) => (
-          <div class="medication-period">
-            <h3>{period.period}</h3>
-
-            <h4>Médicaments:</h4>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Médicament</th>
-                  <th>Dosage</th>
-                  <th>Période</th>
-                  <th>Indication</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                {period.medications.map(med => (
-                  <tr>
-                    <td>{med.name}</td>
-                    <td>{med.dosage}</td>
-                    <td>{med.start} - {med.end}</td>
-                    <td>{med.reason}</td>
-                    <td>{med.notes}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            <div class="efficacy-summary">
-              <p><strong>Efficacité globale:</strong> {period.efficacy}</p>
-              <p><strong>Effets secondaires:</strong></p>
-              <ul>
-                {period.sideEffects.map(effect => <li>{effect}</li>)}
-              </ul>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- Section Évaluations -->
-    <section id="evaluations" class="evaluations-section card">
-      <h2>Évaluations Psychométriques</h2>
-
-      <div class="evaluation-card">
-        <h3>Questionnaire de Dépression de Beck (BDI-II)</h3>
-        <p><strong>Date:</strong> {evaluations.beckDepression.date}</p>
-        <p><strong>Score total:</strong> {evaluations.beckDepression.score}</p>
-        <p><strong>Interprétation:</strong> {evaluations.beckDepression.interpretation}</p>
-
-        <h4>Détail des items:</h4>
+  <!-- Section : Pharmacopée -->
+  <section class="pharmacopoeia-section card">
+    <h2>Pharmacopée - Traitements en cours</h2>
+    
+    <div class="treatment-comparison">
+      <div class="current-treatments">
+        <h3>Traitements Actuels</h3>
         <table class="table">
           <thead>
             <tr>
-              <th>Question</th>
-              <th>Score</th>
+              <th>Médicament</th>
+              <th>Dosage</th>
+              <th>Fréquence</th>
+              <th>Début</th>
+              <th>Prescrit par</th>
+              <th>Indication</th>
             </tr>
           </thead>
           <tbody>
-            {evaluations.beckDepression.items.map(item => (
+            {currentMedications.map((med) => (
               <tr>
-                <td>{item.question}</td>
-                <td>{item.score}</td>
+                <td>{med.name}</td>
+                <td>{med.dosage}</td>
+                <td>{med.frequency}</td>
+                <td>{med.startDate}</td>
+                <td>{med.prescriber}</td>
+                <td>{med.indication}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      <div class="evaluation-card">
-        <h3>Questionnaire d'Anxiété de Beck (BAI)</h3>
-        <p><strong>Date:</strong> {evaluations.beckAnxiety.date}</p>
-        <p><strong>Score total:</strong> {evaluations.beckAnxiety.score}</p>
-        <p><strong>Interprétation:</strong> {evaluations.beckAnxiety.interpretation}</p>
-
-        <div class="anxiety-dimensions">
-          <p><strong>Dimension somatique:</strong> {evaluations.beckAnxiety.dimensions.somatic}/21</p>
-          <p><strong>Dimension cognitive:</strong> {evaluations.beckAnxiety.dimensions.cognitive}/21</p>
-        </div>
+      
+      <div class="previous-treatments">
+        <h3>Traitements Antérieurs</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Médicament</th>
+              <th>Dosage</th>
+              <th>Fréquence</th>
+              <th>Période</th>
+              <th>Raison de l'arrêt</th>
+            </tr>
+          </thead>
+          <tbody>
+            {previousMedications.map((med) => (
+              <tr>
+                <td>{med.name}</td>
+                <td>{med.dosage}</td>
+                <td>{med.frequency}</td>
+                <td>{med.period}</td>
+                <td>{med.reason}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </section>
+    </div>
+    
+    <div class="section-note">
+      <p><em>[CONTENU À REMPLIR - EFFETS SECONDAIRES, TOLÉRANCE ET ADHÉRENCE]</em></p>
+    </div>
+  </section>
 
-    <!-- Section Questionnaires Ouverts -->
-    <section id="questionnaires" class="questionnaires-section card">
-      <h2>Questionnaire Ouvert</h2>
-      <p class="section-intro">Réponses du patient aux questions ouvertes</p>
-
-      <div class="questionnaire-list">
-        {openQuestions.map((q, index) => (
-          <div class="question-item">
-            <h3>Question {index + 1}: {q.question}</h3>
-            <p class="question-date">Répondu le: {q.date}</p>
-            <div class="question-response">
-              <p>{q.response}</p>
-            </div>
+  <!-- Section : Auto-évaluations -->
+  <section class="self-assessment-section card">
+    <h2>Auto-évaluations et Questionnaires</h2>
+    
+    <div class="assessment-grid">
+      <!-- Beck Depression Inventory -->
+      <div class="assessment-card">
+        <h3>Inventaire de Dépression de Beck (BDI)</h3>
+        <div class="assessment-placeholder">
+          <p><strong>Dernière passation :</strong> [CONTENU À REMPLIR - DATE]</p>
+          <p><strong>Score total :</strong> [CONTENU À REMPLIR - SCORE]</p>
+          <p><strong>Interprétation :</strong> [CONTENU À REMPLIR - NIVEAU]</p>
+          <div class="placeholder-content">
+            <p><em>Graphique d'évolution à insérer ici</em></p>
           </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- Actions cliniques -->
-    <section class="clinical-actions">
-      <h2>Actions et Suivi</h2>
-      <div class="actions-grid">
-        <a href="/dossier-clinique-astro/parcours" class="action-card">
-          <h3>Voir l'anamnèse</h3>
-          <p>Historique complet du patient</p>
-        </a>
-        <a href="/dossier-clinique-astro/archives" class="action-card">
-          <h3>Documents cliniques</h3>
-          <p>Bilans et rapports PDF</p>
-        </a>
-        <div class="action-card">
-          <h3>Prochain rendez-vous</h3>
-          <p>05/03/2026 - Suivi psychiatrique</p>
         </div>
       </div>
-    </section>
-  </div>
+      
+      <!-- Questionnaire Ouvert -->
+      <div class="assessment-card">
+        <h3>Questionnaire Ouvert - État Actuel</h3>
+        <div class="assessment-placeholder">
+          <p><strong>Dernière mise à jour :</strong> [CONTENU À REMPLIR - DATE]</p>
+          <div class="placeholder-content">
+            <p><em>[CONTENU À REMPLIR - DESCRIPTION SUBJECTIVE DE L'ÉTAT ACTUEL, DIFFICULTÉS RENCONTRÉES, PROGRÈS RÉALISÉS]</em></p>
+            <p><em>[CONTENU À REMPLIR - BESOINS IDENTIFIÉS ET ATTENTES VIS-À-VIS DU SUIVI]</em></p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Échelles complémentaires -->
+      <div class="assessment-card">
+        <h3>Échelles Complémentaires</h3>
+        <div class="assessment-placeholder">
+          <p><strong>Échelle d'Anxiété de Hamilton (HAM-A) :</strong> [CONTENU À REMPLIR]</p>
+          <p><strong>Échelle de Qualité de Vie (WHOQOL) :</strong> [CONTENU À REMPLIR]</p>
+          <p><strong>Échelle de Fonctionnement Social (SFS) :</strong> [CONTENU À REMPLIR]</p>
+          <div class="placeholder-content">
+            <p><em>[CONTENU À REMPLIR - SYNTHÈSE DES ÉVALUATIONS COMPLÉMENTAIRES]</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- Styles spécifiques -->
+  <!-- Styles spécifiques à la page -->
   <style>
-    .secondary-nav {
-      background-color: #f8f9fa;
-      padding: var(--spacing-sm) 0;
-      margin-bottom: var(--spacing-lg);
-      border-radius: var(--border-radius);
-    }
-
-    .secondary-nav ul {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: var(--spacing-md);
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .secondary-nav a {
-      padding: var(--spacing-sm) var(--spacing-md);
-      background-color: white;
-      border-radius: var(--border-radius);
-      border: 1px solid #ddd;
-      transition: var(--transition);
-    }
-
-    .secondary-nav a:hover {
-      background-color: var(--color-secondary);
-      color: white;
-      border-color: var(--color-secondary);
-    }
-
-    .diagnostic-info {
-      background-color: #f8f9fa;
-      padding: var(--spacing-md);
-      border-radius: var(--border-radius);
-      margin-bottom: var(--spacing-md);
-    }
-
-    .ados-explanation {
-      background-color: white;
-      padding: var(--spacing-md);
-      border-radius: var(--border-radius);
-      border-left: 4px solid var(--color-secondary);
-    }
-
-    .characteristics-grid {
+    /* ----------------------------------------------------------------------
+       DIAGNOSTIC ADOS-2
+       ---------------------------------------------------------------------- */
+    .diagnostic-summary {
       display: grid;
-      gap: var(--spacing-sm);
-      margin-bottom: var(--spacing-md);
+      grid-template-columns: auto 1fr;
+      gap: var(--spacing-xl);
+      align-items: center;
+      margin-bottom: var(--spacing-xl);
     }
 
-    .characteristic-item {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--spacing-sm);
-      padding: var(--spacing-sm) var(--spacing-md);
-      background-color: #f8f9fa;
-      border-radius: var(--border-radius);
-    }
-
-    .characteristic-icon {
-      color: var(--color-secondary);
-      font-size: 1.2rem;
-      margin-top: 2px;
-    }
-
-    .profile-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--spacing-md);
-      margin-bottom: var(--spacing-md);
-    }
-
-    .profile-item {
+    .score-card {
       text-align: center;
-      padding: var(--spacing-sm);
-      background-color: white;
-      border-radius: var(--border-radius);
-      border: 1px solid #ddd;
+      padding: var(--spacing-lg);
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: var(--color-white);
+      border-radius: var(--border-radius-lg);
+      min-width: 200px;
     }
 
-    .medication-comparison {
+    .score-value {
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .score-label {
+      font-size: 1.125rem;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .score-date {
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+
+    .diagnostic-details h3 {
+      margin-bottom: var(--spacing-md);
+      color: var(--color-primary);
+      border-bottom: none;
+    }
+
+    .evaluator-info {
+      margin-top: var(--spacing-md);
+      padding-top: var(--spacing-md);
+      border-top: 1px solid var(--color-gray-200);
+    }
+
+    .domain-scores {
+      margin-top: var(--spacing-xl);
+    }
+
+    .domain-scores h3 {
+      margin-bottom: var(--spacing-md);
+      color: var(--color-primary);
+      border-bottom: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       PHARMACOPÉE
+       ---------------------------------------------------------------------- */
+    .treatment-comparison {
       display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-xl);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .current-treatments h3,
+    .previous-treatments h3 {
+      margin-bottom: var(--spacing-md);
+      color: var(--color-primary);
+      border-bottom: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       AUTO-ÉVALUATIONS
+       ---------------------------------------------------------------------- */
+    .assessment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: var(--spacing-lg);
     }
 
-    .medication-period {
-      padding: var(--spacing-md);
-      background-color: white;
-      border-radius: var(--border-radius);
-      border: 1px solid #ddd;
+    .assessment-card {
+      padding: var(--spacing-lg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      background-color: var(--color-white);
     }
 
-    .efficacy-summary {
+    .assessment-card h3 {
+      margin-bottom: var(--spacing-md);
+      color: var(--color-primary);
+      border-bottom: none;
+    }
+
+    .assessment-placeholder p {
+      margin-bottom: var(--spacing-sm);
+      padding-bottom: var(--spacing-xs);
+      border-bottom: 1px solid var(--color-gray-100);
+    }
+
+    .assessment-placeholder p:last-child {
+      border-bottom: none;
+    }
+
+    .placeholder-content {
       margin-top: var(--spacing-md);
-      padding: var(--spacing-sm);
-      background-color: #f8f9fa;
-      border-radius: var(--border-radius);
-    }
-
-    .evaluation-card {
-      margin-bottom: var(--spacing-lg);
       padding: var(--spacing-md);
-      background-color: white;
-      border-radius: var(--border-radius);
-      border: 1px solid #ddd;
+      background-color: var(--color-gray-50);
+      border-radius: var(--border-radius-md);
+      border-left: 4px solid var(--color-gray-400);
     }
 
-    .questionnaire-list {
-      display: grid;
-      gap: var(--spacing-md);
-    }
-
-    .question-item {
-      padding: var(--spacing-md);
-      background-color: white;
-      border-radius: var(--border-radius);
-      border: 1px solid #ddd;
-    }
-
-    .question-response {
-      margin-top: var(--spacing-sm);
-      padding: var(--spacing-sm);
-      background-color: #f8f9fa;
-      border-radius: var(--border-radius);
+    .placeholder-content p {
+      margin-bottom: var(--spacing-sm);
       font-style: italic;
+      color: var(--color-gray-600);
     }
 
-    .actions-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--spacing-md);
+    .placeholder-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       RESPONSIVE DESIGN
+       ---------------------------------------------------------------------- */
+    @media (max-width: 992px) {
+      .diagnostic-summary {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .score-card {
+        margin: 0 auto;
+      }
+
+      .treatment-comparison {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 768px) {
-      .profile-grid {
+      .assessment-grid {
         grid-template-columns: 1fr;
       }
 
-      .secondary-nav ul {
-        flex-direction: column;
-        align-items: center;
+      .score-card {
+        min-width: auto;
+        padding: var(--spacing-md);
+      }
+
+      .score-value {
+        font-size: 3rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .diagnostic-summary,
+      .treatment-comparison,
+      .assessment-grid {
+        gap: var(--spacing-md);
+      }
+
+      .assessment-card {
+        padding: var(--spacing-md);
+      }
+
+      .table {
+        font-size: 0.75rem;
+      }
+
+      .table th,
+      .table td {
+        padding: var(--spacing-xs);
       }
     }
   </style>

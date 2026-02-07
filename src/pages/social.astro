@@ -1,811 +1,488 @@
 ---
-// Page Réalités Sociales et Logement
+// PAGE D : RÉALITÉ SOCIALE
+// Bloc Logement : Situation actuelle (Sous-sol) et démarches HLM (Négâr Rezai Aria)
+// Bloc Engagement : Bénévolat (Byblos, Bénévoles du 47)
+
 import MainLayout from '../layouts/MainLayout.astro';
 
-// Données sociales actuelles
-const socialData = {
-  currentSituation: {
-    location: "Villeneuve-sur-Lot, Lot-et-Garonne",
-    housingType: "Sous-sol aménagé",
-    housingConditions: {
-      heating: "Chauffage au pétrole",
-      insulation: "Faible",
-      humidity: "Problèmes d'humidité",
-      size: "25m²",
-      amenities: "Accès limité à l'eau chaude"
-    },
-    neighborhood: "Quartier populaire, accès aux services de base",
-    rent: "350€/mois (incluant charges)",
-    moveInDate: "Mars 2022"
+// Props pour le layout
+const pageTitle = 'Réalité Sociale';
+const showHero = true;
+const heroTitle = 'Réalité Sociale';
+const heroDescription = 'Logement, ressources et engagement social';
+const breadcrumbs = [
+  { label: 'Réalité Sociale' }
+];
+
+// Données logement
+const housingSituation = {
+  current: {
+    type: 'Sous-sol aménagé',
+    address: '[CONTENU À REMPLIR - ADRESSE]',
+    surface: '[CONTENU À REMPLIR - SURFACE]',
+    conditions: '[CONTENU À REMPLIR - CONDITIONS DE VIE]',
+    accessibility: '[CONTENU À REMPLIR - ACCESSIBILITÉ]'
   },
-  socialWorker: {
-    name: "Négâr REZAI ARIA",
-    role: "Travailleuse sociale - CMS Villeneuve-sur-Lot",
-    contact: "negar.rezai@cms47.fr",
-    phone: "05 53 40 12 34",
-    affiliation: "Centre Médico-Social de Villeneuve-sur-Lot",
-    followUpFrequency: "Bimensuel"
-  },
-  resources: {
-    aah: {
-      status: "Bénéficiaire",
-      amount: "919,86€/mois (2026)",
-      startDate: "Novembre 2024",
-      endDate: "Octobre 2026",
-      notificationDate: "15/10/2024",
-      reference: "AAH-2024-75123456"
-    },
-    housingBenefits: {
-      status: "En cours",
-      type: "APL (Aide Personnalisée au Logement)",
-      amount: "120€/mois",
-      startDate: "01/01/2025"
-    },
-    foodAssistance: {
-      status: "Éligible",
-      type: "Épicerie sociale",
-      frequency: "Hebdomadaire",
-      provider: "Secours Populaire"
-    }
+  hlmApplication: {
+    status: 'Dossier déposé',
+    date: '10/01/2026',
+    contact: 'Négâr Rezai Aria',
+    agency: '[CONTENU À REMPLIR - ORGANISME HLM]',
+    reference: '[CONTENU À REMPLIR - NUMÉRO DE DOSSIER]'
   }
 };
 
-// Demande HLM en cours
-const hlmApplication = {
-  status: "En instruction",
-  submissionDate: "15/01/2025",
-  reference: "HLM-47-2025-01234",
-  priorityLevel: "Urgent (niveau 2)",
-  requestedLocation: "Villeneuve-sur-Lot centre",
-  requestedType: "T2 adapté",
-  expectedTimeline: "6-12 mois",
-  supportingDocuments: [
-    "Notification AAH",
-    "Avis d'imposition",
-    "Certificat médical",
-    "Attestation de logement précaire"
-  ],
-  followUp: [
-    { date: "15/03/2025", action: "Dossier complet déposé", status: "✓" },
-    { date: "05/06/2025", action: "Visite sociale", status: "✓" },
-    { date: "20/09/2025", action: "Commission d'attribution", status: "En attente" },
-    { date: "15/12/2025", action: "Décision prévue", status: "À venir" }
-  ]
-};
-
-// Réseau de soutien
-const supportNetwork = {
-  formal: [
-    {
-      name: "Négâr REZAI ARIA",
-      role: "Travailleuse sociale",
-      organization: "CMS Villeneuve-sur-Lot",
-      contact: "05 53 40 12 34",
-      frequency: "Bimensuel"
-    },
-    {
-      name: "Dr. Sophie Martin",
-      role: "Psychiatre",
-      organization: "CMP Villeneuve-sur-Lot",
-      contact: "05 53 40 56 78",
-      frequency: "Mensuel"
-    },
-    {
-      name: "Association Byblos",
-      role: "Accompagnement social",
-      organization: "Byblos Villeneuve-sur-Lot",
-      contact: "05 53 40 90 12",
-      frequency: "Hebdomadaire"
-    }
-  ],
-  informal: [
-    {
-      name: "Jean Dupont",
-      role: "Bénévole associé",
-      relationship: "Connu via Byblos",
-      contact: "06 12 34 56 78",
-      frequency: "Quotidien (activités communes)"
-    },
-    {
-      name: "Marie Laurent",
-      role: "Voisine",
-      relationship: "Soutien occasionnel",
-      contact: "06 23 45 67 89",
-      frequency: "Hebdomadaire"
-    }
-  ],
-  community: [
-    {
-      name: "Bénévoles du 47",
-      role: "Association locale",
-      activities: "Activités sociales et culturelles",
-      contact: "05 53 40 11 22",
-      frequency: "Bimensuel"
-    },
-    {
-      name: "Repair Café Villeneuve",
-      role: "Atelier participatif",
-      activities: "Réparation d'objets, échanges",
-      contact: "05 53 40 33 44",
-      frequency: "Mensuel"
-    }
-  ]
-};
-
-// Besoins identifiés
-const identifiedNeeds = [
+// Données bénévolat
+const volunteerActivities = [
   {
-    category: "Logement",
-    priority: "Haute",
-    description: "Accès à un logement social adapté (T2) avec conditions décentes",
-    currentStatus: "Demande HLM en cours",
-    targetDate: "Fin 2025"
+    organization: 'Byblos',
+    role: 'Bénévole',
+    period: '[CONTENU À REMPLIR - PÉRIODE]',
+    description: '[CONTENU À REMPLIR - MISSIONS ET ACTIVITÉS]',
+    skills: '[CONTENU À REMPLIR - COMPÉTENCES DÉVELOPPÉES]'
   },
   {
-    category: "Santé",
-    priority: "Moyenne",
-    description: "Amélioration de l'accès aux soins dentaires et ophtalmologiques",
-    currentStatus: "Non couvert par CMU-C",
-    targetDate: "2026"
-  },
-  {
-    category: "Social",
-    priority: "Haute",
-    description: "Développement du réseau de soutien informel",
-    currentStatus: "Réseau limité mais en croissance",
-    targetDate: "Continu"
-  },
-  {
-    category: "Professionnel",
-    priority: "Moyenne",
-    description: "Accès à un emploi adapté ou activité bénévole structurante",
-    currentStatus: "Projet associatif en développement",
-    targetDate: "2026"
+    organization: 'Bénévoles du 47',
+    role: 'Bénévole',
+    period: '[CONTENU À REMPLIR - PÉRIODE]',
+    description: '[CONTENU À REMPLIR - MISSIONS ET ACTIVITÉS]',
+    skills: '[CONTENU À REMPLIR - COMPÉTENCES DÉVELOPPÉES]'
   }
 ];
+
+// Ressources financières
+const financialResources = {
+  aah: {
+    amount: '[CONTENU À REMPLIR - MONTANT]',
+    frequency: 'Mensuelle',
+    startDate: '15/11/2024'
+  },
+  other: [
+    { source: '[CONTENU À REMPLIR - SOURCE]', amount: '[CONTENU À REMPLIR - MONTANT]' },
+    { source: '[CONTENU À REMPLIR - SOURCE]', amount: '[CONTENU À REMPLIR - MONTANT]' }
+  ]
+};
 ---
 
-<MainLayout title="Réalités Sociales">
-  <div class="container">
-    <!-- En-tête -->
-    <header class="page-header">
-      <h1>Réalités Sociales et Logement</h1>
-      <p class="subtitle">Situation actuelle et suivi social</p>
-    </header>
-
-    <!-- Navigation secondaire -->
-    <nav class="secondary-nav" aria-label="Navigation sociale">
-      <ul>
-        <li><a href="#housing">Logement Actuel</a></li>
-        <li><a href="#hlm">Demande HLM</a></li>
-        <li><a href="#resources">Ressources Financières</a></li>
-        <li><a href="#network">Réseau de Soutien</a></li>
-        <li><a href="#needs">Besoins Identifiés</a></li>
-      </ul>
-    </nav>
-
-    <!-- Section Logement Actuel -->
-    <section id="housing" class="housing-section card">
-      <h2>Situation de Logement Actuelle</h2>
-
-      <div class="housing-summary">
-        <h3>Résumé</h3>
-        <div class="summary-grid">
-          <div class="summary-item">
-            <span class="label">Localisation:</span>
-            <span class="value">{socialData.currentSituation.location}</span>
-          </div>
-          <div class="summary-item">
-            <span class="label">Type:</span>
-            <span class="value">{socialData.currentSituation.housingType}</span>
-          </div>
-          <div class="summary-item">
-            <span class="label">Loyer:</span>
-            <span class="value">{socialData.currentSituation.rent}</span>
-          </div>
-          <div class="summary-item">
-            <span class="label">Emménagement:</span>
-            <span class="value">{socialData.currentSituation.moveInDate}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="housing-conditions">
-        <h3>Conditions du Logement</h3>
-        <div class="conditions-grid">
-          {Object.entries(socialData.currentSituation.housingConditions).map(([key, value]) => (
-            <div class="condition-item">
-              <span class="condition-label">{key}:</span>
-              <span class="condition-value">{value}</span>
-            </div>
-          ))}
-        </div>
-
-        <div class="housing-alert alert-warning">
-          <strong>Alertes:</strong> Conditions de logement précaires nécessitant une intervention prioritaire.
-        </div>
-      </div>
-
-      <div class="housing-photos">
-        <h3>Photos du Logement</h3>
-        <div class="photo-grid">
-          <div class="photo-placeholder">
-            <div class="photo-icon">📷</div>
-            <p>Extérieur du logement</p>
-          </div>
-          <div class="photo-placeholder">
-            <div class="photo-icon">📷</div>
-            <p>Intérieur - Espace principal</p>
-          </div>
-          <div class="photo-placeholder">
-            <div class="photo-icon">📷</div>
-            <p>Installation de chauffage</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section Demande HLM -->
-    <section id="hlm" class="hlm-section card">
-      <h2>Demande de Logement Social (HLM)</h2>
-
-      <div class="hlm-status">
-        <h3>Statut: {hlmApplication.status}</h3>
-        <div class="status-indicator {hlmApplication.status === 'En instruction' ? 'in-progress' : hlmApplication.status === 'Acceptée' ? 'accepted' : 'rejected'}">
-          {hlmApplication.status}
-        </div>
-      </div>
-
-      <div class="hlm-details">
-        <div class="detail-grid">
+<MainLayout 
+  title={pageTitle} 
+  showHero={showHero}
+  heroTitle={heroTitle}
+  heroDescription={heroDescription}
+  breadcrumbs={breadcrumbs}
+>
+  <!-- Section : Situation de Logement -->
+  <section class="housing-section card">
+    <h2>Situation de Logement</h2>
+    
+    <div class="housing-grid">
+      <!-- Situation actuelle -->
+      <div class="housing-card current-situation">
+        <h3 class="card-title">Situation Actuelle</h3>
+        <div class="housing-details">
           <div class="detail-item">
-            <span class="label">Référence:</span>
-            <span class="value">{hlmApplication.reference}</span>
+            <span class="detail-label">Type de logement :</span>
+            <span class="detail-value">{housingSituation.current.type}</span>
           </div>
           <div class="detail-item">
-            <span class="label">Date de dépôt:</span>
-            <span class="value">{hlmApplication.submissionDate}</span>
+            <span class="detail-label">Adresse :</span>
+            <span class="detail-value">{housingSituation.current.address}</span>
           </div>
           <div class="detail-item">
-            <span class="label">Niveau de priorité:</span>
-            <span class="value">{hlmApplication.priorityLevel}</span>
+            <span class="detail-label">Surface :</span>
+            <span class="detail-value">{housingSituation.current.surface}</span>
           </div>
           <div class="detail-item">
-            <span class="label">Délai estimé:</span>
-            <span class="value">{hlmApplication.expectedTimeline}</span>
+            <span class="detail-label">Conditions :</span>
+            <span class="detail-value">{housingSituation.current.conditions}</span>
           </div>
+          <div class="detail-item">
+            <span class="detail-label">Accessibilité :</span>
+            <span class="detail-value">{housingSituation.current.accessibility}</span>
+          </div>
+        </div>
+        
+        <div class="housing-assessment">
+          <h4>Évaluation des Besoins</h4>
+          <p><em>[CONTENU À REMPLIR - ANALYSE DES BESOINS EN MATIÈRE DE LOGEMENT]</em></p>
         </div>
       </div>
 
-      <div class="hlm-timeline">
-        <h3>Suivi de la Demande</h3>
-        <div class="timeline-container">
-          {hlmApplication.followUp.map((step, index) => (
-            <div class="timeline-step">
-              <div class="step-date">{step.date}</div>
-              <div class="step-content">
-                <div class="step-action">{step.action}</div>
-                <div class="step-status">{step.status}</div>
-              </div>
-              {index < hlmApplication.followUp.length - 1 && <div class="step-connector"></div>}
+      <!-- Démarches HLM -->
+      <div class="housing-card hlm-process">
+        <h3 class="card-title">Démarches HLM en cours</h3>
+        <div class="hlm-details">
+          <div class="detail-item">
+            <span class="detail-label">Statut :</span>
+            <span class="detail-value badge badge-warning">{housingSituation.hlmApplication.status}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Date de dépôt :</span>
+            <span class="detail-value">{housingSituation.hlmApplication.date}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Contact référent :</span>
+            <span class="detail-value">{housingSituation.hlmApplication.contact}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Organisme HLM :</span>
+            <span class="detail-value">{housingSituation.hlmApplication.agency}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">N° de dossier :</span>
+            <span class="detail-value">{housingSituation.hlmApplication.reference}</span>
+          </div>
+        </div>
+        
+        <div class="hlm-timeline">
+          <h4>Étapes du processus</h4>
+          <ol class="process-steps">
+            <li class="step completed">
+              <span class="step-number">1</span>
+              <span class="step-label">Dépôt du dossier</span>
+              <span class="step-date">{housingSituation.hlmApplication.date}</span>
+            </li>
+            <li class="step current">
+              <span class="step-number">2</span>
+              <span class="step-label">Instruction du dossier</span>
+              <span class="step-date">En cours</span>
+            </li>
+            <li class="step pending">
+              <span class="step-number">3</span>
+              <span class="step-label">Commission d'attribution</span>
+              <span class="step-date">À venir</span>
+            </li>
+            <li class="step pending">
+              <span class="step-number">4</span>
+              <span class="step-label">Proposition de logement</span>
+              <span class="step-date">À venir</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section : Engagement Bénévolat -->
+  <section class="volunteering-section card">
+    <h2>Engagement Bénévolat</h2>
+    
+    <div class="volunteering-grid">
+      {volunteerActivities.map((activity) => (
+        <div class="volunteer-card">
+          <div class="organization-header">
+            <h3 class="organization-name">{activity.organization}</h3>
+            <span class="volunteer-role badge badge-primary">{activity.role}</span>
+          </div>
+          
+          <div class="volunteer-details">
+            <div class="detail-item">
+              <span class="detail-label">Période :</span>
+              <span class="detail-value">{activity.period}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Description :</span>
+              <span class="detail-value">{activity.description}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Compétences développées :</span>
+              <span class="detail-value">{activity.skills}</span>
+            </div>
+          </div>
+          
+          <div class="volunteer-impact">
+            <h4>Impact sur l'Insertion Sociale</h4>
+            <p><em>[CONTENU À REMPLIR - BÉNÉFICES POUR L'INSERTION SOCIALE ET PROFESSIONNELLE]</em></p>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <div class="volunteering-summary">
+      <h3>Synthèse de l'Engagement</h3>
+      <p><em>[CONTENU À REMPLIR - ÉVALUATION GLOBALE DE L'ENGAGEMENT BÉNÉVOLE ET PERSPECTIVES]</em></p>
+    </div>
+  </section>
+
+  <!-- Section : Ressources et Autonomie -->
+  <section class="resources-section card">
+    <h2>Ressources et Autonomie</h2>
+    
+    <div class="resources-grid">
+      <!-- Ressources financières -->
+      <div class="resources-card financial">
+        <h3 class="card-title">Ressources Financières</h3>
+        <div class="financial-details">
+          <div class="resource-item main-resource">
+            <span class="resource-label">Allocation Adulte Handicapé (AAH) :</span>
+            <span class="resource-value">{financialResources.aah.amount}</span>
+            <span class="resource-frequency">({financialResources.aah.frequency})</span>
+          </div>
+          
+          {financialResources.other.map((resource) => (
+            <div class="resource-item">
+              <span class="resource-label">{resource.source} :</span>
+              <span class="resource-value">{resource.amount}</span>
             </div>
           ))}
         </div>
+        
+        <div class="budget-analysis">
+          <h4>Analyse Budgétaire</h4>
+          <p><em>[CONTENU À REMPLIR - ÉQUILIBRE BUDGÉTAIRE ET BESOINS FINANCIERS]</em></p>
+        </div>
       </div>
 
-      <div class="hlm-documents">
-        <h3>Documents Fourni</h3>
-        <ul>
-          {hlmApplication.supportingDocuments.map(doc => (
-            <li>{doc}</li>
-          ))}
-        </ul>
-      </div>
-    </section>
-
-    <!-- Section Ressources -->
-    <section id="resources" class="resources-section card">
-      <h2>Ressources Financières et Aides</h2>
-
-      <div class="resource-grid">
-        <div class="resource-card">
-          <h3>Allocation Adulte Handicapé (AAH)</h3>
-          <p><strong>Statut:</strong> {socialData.resources.aah.status}</p>
-          <p><strong>Montant:</strong> {socialData.resources.aah.amount}</p>
-          <p><strong>Période:</strong> {socialData.resources.aah.startDate} - {socialData.resources.aah.endDate}</p>
-          <p><strong>Référence:</strong> {socialData.resources.aah.reference}</p>
-          <div class="resource-status {socialData.resources.aah.status === 'Bénéficiaire' ? 'active' : 'pending'}">
-            {socialData.resources.aah.status}
+      <!-- Autonomie au quotidien -->
+      <div class="resources-card autonomy">
+        <h3 class="card-title">Autonomie au Quotidien</h3>
+        <div class="autonomy-domains">
+          <div class="domain-item">
+            <h4>Déplacements</h4>
+            <p><em>[CONTENU À REMPLIR - MOYENS DE TRANSPORT ET AUTONOMIE]</em></p>
           </div>
-        </div>
-
-        <div class="resource-card">
-          <h3>Aide au Logement (APL)</h3>
-          <p><strong>Statut:</strong> {socialData.resources.housingBenefits.status}</p>
-          <p><strong>Type:</strong> {socialData.resources.housingBenefits.type}</p>
-          <p><strong>Montant:</strong> {socialData.resources.housingBenefits.amount}</p>
-          <p><strong>Début:</strong> {socialData.resources.housingBenefits.startDate}</p>
-          <div class="resource-status {socialData.resources.housingBenefits.status === 'En cours' ? 'active' : 'pending'}">
-            {socialData.resources.housingBenefits.status}
+          <div class="domain-item">
+            <h4>Gestion administrative</h4>
+            <p><em>[CONTENU À REMPLIR - CAPACITÉ À GÉRER LES DÉMARCHES ADMINISTRATIVES]</em></p>
           </div>
-        </div>
-
-        <div class="resource-card">
-          <h3>Aide Alimentaire</h3>
-          <p><strong>Statut:</strong> {socialData.resources.foodAssistance.status}</p>
-          <p><strong>Type:</strong> {socialData.resources.foodAssistance.type}</p>
-          <p><strong>Fréquence:</strong> {socialData.resources.foodAssistance.frequency}</p>
-          <p><strong>Fournisseur:</strong> {socialData.resources.foodAssistance.provider}</p>
-          <div class="resource-status {socialData.resources.foodAssistance.status === 'Éligible' ? 'active' : 'pending'}">
-            {socialData.resources.foodAssistance.status}
+          <div class="domain-item">
+            <h4>Vie quotidienne</h4>
+            <p><em>[CONTENU À REMPLIR - GESTION DU QUOTIDIEN ET AUTONOMIE FONCTIONNELLE]</em></p>
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="budget-summary">
-        <h3>Résumé Budgétaire Mensuel</h3>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Source</th>
-              <th>Montant</th>
-              <th>Détails</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>AAH</td>
-              <td>{socialData.resources.aah.amount}</td>
-              <td>Revenu principal</td>
-            </tr>
-            <tr>
-              <td>APL</td>
-              <td>{socialData.resources.housingBenefits.amount}</td>
-              <td>Aide au logement</td>
-            </tr>
-            <tr>
-              <td>Aide alimentaire</td>
-              <td>Est. 80€</td>
-              <td>Épicerie sociale</td>
-            </tr>
-            <tr>
-              <td><strong>Total ressources</strong></td>
-              <td><strong>1 119,86€</strong></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Loyer</td>
-              <td>-350€</td>
-              <td>Incluant charges</td>
-            </tr>
-            <tr>
-              <td>Dépenses courantes</td>
-              <td>-250€</td>
-              <td>Nourriture, transport, santé</td>
-            </tr>
-            <tr>
-              <td><strong>Reste à vivre</strong></td>
-              <td><strong>519,86€</strong></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Section Réseau de Soutien -->
-    <section id="network" class="network-section card">
-      <h2>Réseau de Soutien</h2>
-
-      <div class="network-category">
-        <h3>Soutien Formel (Professionnel)</h3>
-        <div class="support-grid">
-          {supportNetwork.formal.map((support: any) => (
-            <div class="support-card">
-              <h4>{support.name}</h4>
-              <p><strong>Rôle:</strong> {support.role}</p>
-              <p><strong>Organisation:</strong> {support.organization}</p>
-              <p><strong>Contact:</strong> {support.contact}</p>
-              <p><strong>Fréquence:</strong> {support.frequency}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div class="network-category">
-        <h3>Soutien Informel (Personnel)</h3>
-        <div class="support-grid">
-          {supportNetwork.informal.map((support: any) => (
-            <div class="support-card">
-              <h4>{support.name}</h4>
-              <p><strong>Rôle:</strong> {support.role}</p>
-              <p><strong>Relation:</strong> {support.relationship}</p>
-              <p><strong>Contact:</strong> {support.contact}</p>
-              <p><strong>Fréquence:</strong> {support.frequency}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div class="network-category">
-        <h3>Réseau Communautaire</h3>
-        <div class="support-grid">
-          {supportNetwork.community.map((support: any) => (
-            <div class="support-card">
-              <h4>{support.name}</h4>
-              <p><strong>Rôle:</strong> {support.role}</p>
-              <p><strong>Activités:</strong> {support.activities}</p>
-              <p><strong>Contact:</strong> {support.contact}</p>
-              <p><strong>Fréquence:</strong> {support.frequency}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div class="network-analysis">
-        <h3>Analyse du Réseau</h3>
-        <div class="analysis-chart">
-          <div class="chart-item formal">
-            <span class="chart-value">3</span>
-            <span class="chart-label">Formel</span>
-          </div>
-          <div class="chart-item informal">
-            <span class="chart-value">2</span>
-            <span class="chart-label">Informel</span>
-          </div>
-          <div class="chart-item community">
-            <span class="chart-value">2</span>
-            <span class="chart-label">Communauté</span>
-          </div>
-        </div>
-        <p>Le réseau de soutien est en développement, avec un bon équilibre entre soutien professionnel et communautaire.</p>
-      </div>
-    </section>
-
-    <!-- Section Besoins Identifiés -->
-    <section id="needs" class="needs-section card">
-      <h2>Besoins Identifiés et Plan d'Action</h2>
-
-      <div class="needs-grid">
-        {identifiedNeeds.map(need => (
-          <div class="need-card">
-            <div class="need-header">
-              <h3>{need.category}</h3>
-              <span class="priority-badge {need.priority === 'Haute' ? 'high' : 'medium'}">
-                Priorité {need.priority}
-              </span>
-            </div>
-            <div class="need-content">
-              <p><strong>Description:</strong> {need.description}</p>
-              <p><strong>Statut actuel:</strong> {need.currentStatus}</p>
-              <p><strong>Objectif:</strong> {need.targetDate}</p>
-            </div>
-            <div class="need-actions">
-              <button class="btn btn-sm">Voir les actions</button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div class="action-plan">
-        <h3>Plan d'Action Global</h3>
-        <ol>
-          <li>Finaliser la demande HLM avec suivi régulier (priorité 1)</li>
-          <li>Développer le réseau de soutien informel via les activités communautaires</li>
-          <li>Explorer les options d'emploi adapté ou bénévolat structuré</li>
-          <li>Améliorer l'accès aux soins de santé non couverts</li>
-          <li>Stabiliser la situation de logement à moyen terme</li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- Section Contacts Importants -->
-    <section class="contacts-section card">
-      <h2>Contacts Importants</h2>
-
-      <div class="contacts-grid">
-        <div class="contact-card">
-          <h3>Travailleuse Sociale</h3>
-          <p><strong>Nom:</strong> {socialData.socialWorker.name}</p>
-          <p><strong>Rôle:</strong> {socialData.socialWorker.role}</p>
-          <p><strong>Téléphone:</strong> {socialData.socialWorker.phone}</p>
-          <p><strong>Email:</strong> {socialData.socialWorker.contact}</p>
-          <p><strong>Fréquence:</strong> {socialData.socialWorker.followUpFrequency}</p>
-        </div>
-
-        <div class="contact-card">
-          <h3>Urgences Sociales</h3>
-          <p><strong>SAMU Social:</strong> 115</p>
-          <p><strong>CMS Villeneuve:</strong> 05 53 40 12 34</p>
-          <p><strong>CCAS:</strong> 05 53 40 56 78</p>
-          <p><strong>Secours Populaire:</strong> 05 53 40 90 12</p>
-        </div>
-
-        <div class="contact-card">
-          <h3>Ressources Locales</h3>
-          <p><strong>Épicerie Sociale:</strong> 15 Rue de la République</p>
-          <p><strong>Byblos:</strong> 23 Avenue de Paris</p>
-          <p><strong>Repair Café:</strong> 10 Place Lafayette</p>
-          <p><strong>Médiathèque:</strong> 5 Rue du Collège</p>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- Styles spécifiques -->
+  <!-- Styles spécifiques à la page -->
   <style>
-    .summary-grid, .detail-grid, .conditions-grid {
+    /* ----------------------------------------------------------------------
+       SITUATION DE LOGEMENT
+       ---------------------------------------------------------------------- */
+    .housing-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: var(--spacing-sm);
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-xl);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .housing-card {
+      padding: var(--spacing-lg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      background-color: var(--color-white);
+    }
+
+    .current-situation {
+      border-top: 4px solid var(--color-primary);
+    }
+
+    .hlm-process {
+      border-top: 4px solid var(--color-warning);
+    }
+
+    .housing-details,
+    .hlm-details {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--spacing-sm) 0;
+      border-bottom: 1px solid var(--color-gray-100);
+    }
+
+    .detail-item:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: var(--color-gray-700);
+    }
+
+    .detail-value {
+      color: var(--color-gray-800);
+      text-align: right;
+    }
+
+    .housing-assessment,
+    .hlm-timeline {
+      margin-top: var(--spacing-lg);
+      padding-top: var(--spacing-lg);
+      border-top: 1px solid var(--color-gray-200);
+    }
+
+    .housing-assessment h4,
+    .hlm-timeline h4 {
+      margin-bottom: var(--spacing-md);
+      color: var(--color-primary);
+      border-bottom: none;
+    }
+
+    /* Timeline HLM */
+    .process-steps {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      padding: var(--spacing-md);
+      margin-bottom: var(--spacing-sm);
+      border-radius: var(--border-radius-md);
+      background-color: var(--color-gray-50);
+    }
+
+    .step.completed {
+      background-color: rgba(40, 167, 69, 0.1);
+      border-left: 4px solid var(--color-success);
+    }
+
+    .step.current {
+      background-color: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid var(--color-warning);
+    }
+
+    .step.pending {
+      background-color: var(--color-gray-50);
+      border-left: 4px solid var(--color-gray-400);
+    }
+
+    .step-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background-color: var(--color-white);
+      border-radius: 50%;
+      font-weight: 600;
+      color: var(--color-gray-700);
+    }
+
+    .step-label {
+      flex: 1;
+      font-weight: 600;
+      color: var(--color-gray-800);
+    }
+
+    .step-date {
+      font-size: 0.875rem;
+      color: var(--color-gray-600);
+    }
+
+    /* ----------------------------------------------------------------------
+       ENGAGEMENT BÉNÉVOLAT
+       ---------------------------------------------------------------------- */
+    .volunteering-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .volunteer-card {
+      padding: var(--spacing-lg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      background-color: var(--color-white);
+      border-top: 4px solid var(--color-info);
+    }
+
+    .organization-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: var(--spacing-md);
     }
 
-    .summary-item, .detail-item, .condition-item {
-      background-color: #f8f9fa;
-      padding: var(--spacing-sm);
-      border-radius: var(--border-radius);
+    .organization-name {
+      margin-bottom: 0;
+      color: var(--color-primary);
+      border-bottom: none;
     }
 
-    .label {
+    .volunteer-details {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .volunteer-impact {
+      padding-top: var(--spacing-lg);
+      border-top: 1px solid var(--color-gray-200);
+    }
+
+    .volunteer-impact h4 {
+      margin-bottom: var(--spacing-md);
+      color: var(--color-primary);
+      border-bottom: none;
+    }
+
+    .volunteering-summary {
+      margin-top: var(--spacing-xl);
+      padding: var(--spacing-lg);
+      background-color: var(--color-primary-light);
+      border-radius: var(--border-radius-md);
+      border-left: 4px solid var(--color-primary);
+    }
+
+    .volunteering-summary h3 {
+      margin-bottom: var(--spacing-md);
+      color: var(--color-primary);
+      border-bottom: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       RESSOURCES ET AUTONOMIE
+       ---------------------------------------------------------------------- */
+    .resources-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-xl);
+    }
+
+    .resources-card {
+      padding: var(--spacing-lg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      background-color: var(--color-white);
+    }
+
+    .financial {
+      border-top: 4px solid var(--color-success);
+    }
+
+    .autonomy {
+      border-top: 4px solid var(--color-info);
+    }
+
+    .financial-details {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .resource-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--spacing-sm) 0;
+      border-bottom: 1px solid var(--color-gray-100);
+    }
+
+    .resource-item:last-child {
+      border-bottom: none;
+    }
+
+    .main-resource {
       font-weight: 600;
       color: var(--color-primary);
     }
 
-    .value {
-      color: var(--color-dark);
+    .resource-label {
+      color: var(--color-gray-700);
     }
 
-    .condition-label {
-      font-weight: 600;
-      margin-right: var(--spacing-sm);
-    }
-
-    .housing-alert {
-      margin-top: var(--spacing-md);
-      padding: var(--spacing-sm);
-    }
-
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: var(--spacing-md);
-      margin-top: var(--spacing-md);
-    }
-
-    .photo-placeholder {
-      background-color: #f8f9fa;
-      padding: var(--spacing-lg);
-      border-radius: var(--border-radius);
-      text-align: center;
-      border: 2px dashed #ddd;
-    }
-
-    .photo-icon {
-      font-size: 3rem;
-      margin-bottom: var(--spacing-sm);
-    }
-
-    .hlm-status {
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-md);
-      margin-bottom: var(--spacing-md);
-    }
-
-    .status-indicator {
-      padding: var(--spacing-sm) var(--spacing-md);
-      border-radius: 20px;
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-
-    .status-indicator.in-progress {
-      background-color: var(--color-warning);
-      color: white;
-    }
-
-    .status-indicator.accepted {
-      background-color: var(--color-success);
-      color: white;
-    }
-
-    .status-indicator.rejected {
-      background-color: var(--color-danger);
-      color: white;
-    }
-
-    .timeline-container {
-      margin-top: var(--spacing-md);
-      padding-left: var(--spacing-md);
-      position: relative;
-    }
-
-    .timeline-step {
-      position: relative;
-      padding-left: var(--spacing-lg);
-      margin-bottom: var(--spacing-md);
-    }
-
-    .step-date {
-      font-weight: 600;
-      color: var(--color-secondary);
-      margin-bottom: var(--spacing-sm);
-    }
-
-    .step-content {
-      background-color: #f8f9fa;
-      padding: var(--spacing-sm);
-      border-radius: var(--border-radius);
-    }
-
-    .step-action {
-      font-weight: 600;
-    }
-
-    .step-connector {
-      position: absolute;
-      left: calc(var(--spacing-lg) / 2);
-      top: calc(var(--spacing-lg) * -1);
-      bottom: calc(var(--spacing-md) * -1);
-      width: 2px;
-      background-color: var(--color-secondary);
-    }
-
-    .timeline-step:last-child .step-connector {
-      display: none;
-    }
-
-    .resource-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--spacing-md);
-      margin-bottom: var(--spacing-lg);
-    }
-
-    .resource-card {
-      background-color: white;
-      padding: var(--spacing-md);
-      border-radius: var(--border-radius);
-      border: 1px solid #ddd;
-    }
-
-    .resource-status {
-      display: inline-block;
-      padding: var(--spacing-sm) var(--spacing-md);
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-top: var(--spacing-sm);
-    }
-
-    .resource-status.active {
-      background-color: var(--color-success);
-      color: white;
-    }
-
-    .resource-status.pending {
-      background-color: var(--color-warning);
-      color: white;
-    }
-
-    .support-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--spacing-md);
-    }
-
-    .support-card {
-      background-color: white;
-      padding: var(--spacing-sm);
-      border-radius: var(--border-radius);
-      border: 1px solid #ddd;
-    }
-
-    .network-category {
-      margin-bottom: var(--spacing-lg);
-    }
-
-    .analysis-chart {
-      display: flex;
-      gap: var(--spacing-md);
-      justify-content: center;
-      margin: var(--spacing-md) 0;
-    }
-
-    .chart-item {
-      text-align: center;
-      padding: var(--spacing-sm);
-      border-radius: var(--border-radius);
-      width: 80px;
-    }
-
-    .chart-item.formal {
-      background-color: var(--color-secondary);
-      color: white;
-    }
-
-    .chart-item.informal {
-      background-color: var(--color-success);
-      color: white;
-    }
-
-    .chart-item.community {
-      background-color: var(--color-warning);
-      color: white;
-    }
-
-    .chart-value {
-      display: block;
-      font-size: 1.5rem;
-      font-weight: 700;
-    }
-
-    .needs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--spacing-md);
-    }
-
-    .need-card {
-      background-color: white;
-      border-radius: var(--border-radius);
-      border: 1px solid #ddd;
-      overflow: hidden;
-    }
-
-    .need-header {
-      background-color: var(--color-primary);
-      color: white;
-      padding: var(--spacing-sm) var(--spacing-md);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .priority-badge {
-      padding: var(--spacing-sm) var(--spacing-md);
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-
-    .priority-badge.high {
-      background-color: var(--color-danger);
-    }
-
-    .priority-badge.medium {
-      background-color: var(--color-warning);
-    }
-
-    .need-content {
-      padding: var(--spacing-md);
-    }
-
-    .need-actions {
-      background-color: #f8f9fa;
-      padding: var(--spacing-sm) var(--spacing-md);
-      text-align: right;
-      border-top: 1px solid #ddd;
-    }
-
-    .contacts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--spacing-md);
-    }
-
-    .contact-card {
-      background-color: white;
-      padding: var(--spacing-md);
-      border-radius: var(--border-radius);
-      border: 1px solid #ddd;
-    }
-
-    @media (max-width: 768px) {
-      .resource-grid, .support-grid, .needs-grid, .contacts-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-</MainLayout>
+    .

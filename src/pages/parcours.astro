@@ -1,567 +1,365 @@
 ---
-// Page Anamnèse Chronologique
+// PAGE C : ANAMNÈSE CHRONOLOGIQUE
+// Mise en page de type "Documentation Technique" avec sidebar de navigation par dates
+// Sections : 1979-1984 (ASE), 1986-1995 (Maltraitances), 1995-1998 (Apprentis d'Auteuil), 2022-2026 (Hontaut/Villeneuve)
+
 import MainLayout from '../layouts/MainLayout.astro';
 
-// Importer les collections de contenu
-const parcours = await Astro.glob('../content/parcours/*.md');
+// Props pour le layout
+const pageTitle = 'Anamnèse Chronologique';
+const showHero = true;
+const heroTitle = 'Anamnèse Chronologique';
+const heroDescription = 'Historique médical et parcours de vie - Documentation technique';
+const breadcrumbs = [
+  { label: 'Anamnèse Chronologique' }
+];
 
-// Trier par date
-const sortedParcours = parcours.sort((a, b) => {
-  const dateA = new Date(a.frontmatter.date).getTime();
-  const dateB = new Date(b.frontmatter.date).getTime();
-  return dateA - dateB;
-});
-
-// Données complémentaires pour la timeline
-const timelineData = {
-  currentPeriod: "2022-2026",
-  keyEvents: [
-    { year: 1979, event: "Naissance à Rouen", type: "birth" },
-    { year: 1983, event: "Placement ASE à 4 ans", type: "critical" },
-    { year: 1992, event: "Premier diagnostic de troubles du comportement", type: "medical" },
-    { year: 1998, event: "Premier emploi en informatique", type: "work" },
-    { year: 2020, event: "Premier diagnostic de TSA", type: "medical" },
-    { year: 2024, event: "Obtention de l'AAH", type: "admin" },
-    { year: 2026, event: "Développement du projet associatif", type: "project" }
-  ]
-};
+// Périodes chronologiques
+const chronologicalPeriods = [
+  { id: '1979-1984', label: '1979-1984', title: 'ASE - Aide Sociale à l\'Enfance', description: 'Prise en charge institutionnelle précoce' },
+  { id: '1986-1995', label: '1986-1995', title: 'Période de Maltraitances', description: 'Contexte familial difficile' },
+  { id: '1995-1998', label: '1995-1998', title: 'Apprentis d\'Auteuil', description: 'Structure éducative spécialisée' },
+  { id: '1998-2022', label: '1998-2022', title: 'Vie Adulte - Insertion Professionnelle', description: 'Parcours professionnel et difficultés d\'adaptation' },
+  { id: '2022-2026', label: '2022-2026', title: 'Hontaut / Villeneuve-sur-Lot', description: 'Diagnostic TSA et prise en charge actuelle' }
+];
 ---
 
-<MainLayout title="Anamnèse Chronologique">
-  <div class="container">
-    <!-- En-tête -->
-    <header class="page-header">
-      <h1>Parcours de Vie Chronologique</h1>
-      <p class="subtitle">Timeline complète de 1979 à aujourd'hui</p>
-    </header>
+<MainLayout 
+  title={pageTitle} 
+  showHero={showHero}
+  heroTitle={heroTitle}
+  heroDescription={heroDescription}
+  breadcrumbs={breadcrumbs}
+>
+  <div class="timeline-container">
+    <aside class="timeline-sidebar">
+      <nav class="periods-nav" aria-label="Navigation par périodes">
+        <h3 class="sidebar-title">Périodes Chronologiques</h3>
+        <ul class="periods-list">
+          {chronologicalPeriods.map((period) => (
+            <li class="period-item">
+              <a 
+                href={`#${period.id}`} 
+                class="period-link"
+                data-period={period.id}
+              >
+                <span class="period-label">{period.label}</span>
+                <span class="period-title">{period.title}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-    <!-- Navigation secondaire -->
-    <nav class="secondary-nav" aria-label="Navigation temporelle">
-      <ul>
-        <li><a href="#timeline">Timeline Visuelle</a></li>
-        <li><a href="#detailed">Parcours Détaillé</a></li>
-        <li><a href="#analysis">Analyse Évolutive</a></li>
-        <li><a href="#documents">Documents Associés</a></li>
-      </ul>
-    </nav>
+      <div class="documents-legend">
+        <h4 class="legend-title">Types de Documents</h4>
+        <ul class="legend-list">
+          <li class="legend-item medical">
+            <span class="legend-icon">🏥</span>
+            Documents Médicaux
+          </li>
+          <li class="legend-item social">
+            <span class="legend-icon">🏠</span>
+            Documents Sociaux
+          </li>
+          <li class="legend-item administrative">
+            <span class="legend-icon">📋</span>
+            Documents Administratifs
+          </li>
+          <li class="legend-item personal">
+            <span class="legend-icon">📝</span>
+            Récits Personnels
+          </li>
+        </ul>
+      </div>
+    </aside>
 
-    <!-- Timeline Visuelle -->
-    <section id="timeline" class="timeline-section card">
-      <h2>Timeline Visuelle</h2>
-      <p class="section-intro">Principaux événements marquants</p>
-
-      <div class="timeline-container">
-        <div class="timeline-line"></div>
-
-        {timelineData.keyEvents.map(event => (
-          <div class="timeline-item">
-            <div class="timeline-dot {event.type}"></div>
-            <div class="timeline-content">
-              <div class="timeline-year">{event.year}</div>
-              <div class="timeline-event">{event.event}</div>
-            </div>
+    <main class="timeline-content">
+      {chronologicalPeriods.map((period, index) => (
+        <section id={period.id} class="period-section">
+          <div class="period-header">
+            <h2 class="period-title">{period.title} <span class="period-years">({period.label})</span></h2>
+            <p class="period-description">{period.description}</p>
           </div>
-        ))}
-      </div>
-
-      <div class="timeline-legend">
-        <div class="legend-item">
-          <span class="legend-dot birth"></span>
-          <span>Naissance</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot critical"></span>
-          <span>Événement critique</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot medical"></span>
-          <span>Médical</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot work"></span>
-          <span>Professionnel</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot admin"></span>
-          <span>Administratif</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot project"></span>
-          <span>Projet</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Parcours Détaillé -->
-    <section id="detailed" class="detailed-section">
-      <h2>Parcours Détaillé</h2>
-      <p class="section-intro">Analyse période par période</p>
-
-      {sortedParcours.map((item, index) => (
-        <article class="period-card">
-          <header class="period-header">
-            <h3>{item.frontmatter.title}</h3>
-            <span class="period-badge">{item.frontmatter.period}</span>
-            {item.frontmatter.period === timelineData.currentPeriod && (
-              <span class="current-period-badge">Période Actuelle</span>
-            )}
-          </header>
 
           <div class="period-content">
-            <div class="period-markdown" set:html={item.compiledContent()} />
-          </div>
+            <div class="period-documents">
+              <h3>Documents Associés</h3>
+              
+              <div class="documents-grid">
+                <div class="document-card medical">
+                  <div class="document-icon">🏥</div>
+                  <div class="document-content">
+                    <h4>Comptes-rendus Médicaux</h4>
+                    <p><em>[Détails des comptes-rendus pour {period.label}]</em></p>
+                    <ul class="document-list">
+                      <li>[Référence document 1]</li>
+                      <li>[Référence document 2]</li>
+                    </ul>
+                  </div>
+                </div>
 
-          <footer class="period-footer">
-            <span class="period-duration">
-              Durée: {new Date(item.frontmatter.date).getFullYear() === 1979 ? '4 ans' :
-                     item.frontmatter.period === '1986-1995' ? '9 ans' :
-                     item.frontmatter.period === '1995-1998' ? '3 ans' :
-                     item.frontmatter.period === '1998-2022' ? '24 ans' : '4 ans'}
-            </span>
-            <a href="#timeline" class="back-to-timeline">Retour à la timeline</a>
-          </footer>
-        </article>
+                <div class="document-card social">
+                  <div class="document-icon">🏠</div>
+                  <div class="document-content">
+                    <h4>Documents Sociaux</h4>
+                    <p><em>[Rapports sociaux et éducatifs - {period.label}]</em></p>
+                    <ul class="document-list">
+                      <li>[Rapports ASE/Educateurs]</li>
+                      <li>[Évaluations sociales]</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="document-card personal">
+                  <div class="document-icon">📝</div>
+                  <div class="document-content">
+                    <h4>Récits et Témoignages</h4>
+                    <div class="narrative-placeholder">
+                      <p>[Description des événements marquants et ressentis pour cette période]</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="period-analysis">
+              <h3>Analyse Clinique Rétrospective</h3>
+              <div class="analysis-content">
+                <div class="analysis-points">
+                  <h4>Points Clés :</h4>
+                  <ul>
+                    <li>Facteurs de risque identifiés</li>
+                    <li>Ressources et protection</li>
+                    <li>Impact sur le développement</li>
+                    <li>Liens avec le diagnostic actuel</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="period-navigation">
+              {index > 0 && (
+                <a 
+                  href={`#${chronologicalPeriods[index - 1].id}`} 
+                  class="nav-link prev-period"
+                >
+                  ← {chronologicalPeriods[index - 1].label}
+                </a>
+              )}
+              
+              {index < chronologicalPeriods.length - 1 && (
+                <a 
+                  href={`#${chronologicalPeriods[index + 1].id}`} 
+                  class="nav-link next-period"
+                >
+                  {chronologicalPeriods[index + 1].label} →
+                </a>
+              )}
+            </div>
+          </div>
+        </section>
       ))}
-    </section>
-
-    <!-- Analyse Évolutive -->
-    <section id="analysis" class="analysis-section card">
-      <h2>Analyse Évolutive</h2>
-
-      <div class="analysis-grid">
-        <div class="analysis-item">
-          <h3>Développement Cognitif</h3>
-          <p>Maintien des capacités intellectuelles malgré les difficultés environnementales.</p>
-          <ul>
-            <li>QI global stable autour de 110-115</li>
-            <li>Compétences techniques en informatique développées</li>
-            <li>Intérêts spécifiques comme stratégie d'adaptation</li>
-          </ul>
-        </div>
-
-        <div class="analysis-item">
-          <h3>Santé Mentale</h3>
-          <p>Évolution des diagnostics et traitements.</p>
-          <ul>
-            <li>1992: Troubles du comportement</li>
-            <li>1997: Troubles anxieux sévères</li>
-            <li>2005: Dépression majeure</li>
-            <li>2020: TSA (non confirmé)</li>
-            <li>2024: TSA confirmé (ADOS-2: 11)</li>
-          </ul>
-        </div>
-
-        <div class="analysis-item">
-          <h3>Stabilité Résidentielle</h3>
-          <p>Parcours résidentiel marqué par l'instabilité.</p>
-          <ul>
-            <li>1979-1983: Famille biologique</li>
-            <li>1983-1995: 7 placements différents</li>
-            <li>1995-1998: Institutions éducatives</li>
-            <li>1998-2022: Errance et précarité</li>
-            <li>2022-présent: Stabilisation relative</li>
-          </ul>
-        </div>
-
-        <div class="analysis-item">
-          <h3>Réseau Social</h3>
-          <p>Évolution des relations sociales.</p>
-          <ul>
-            <li>Enfance: Relations familiales conflictuelles</li>
-            <li>Adolescence: Isolement progressif</li>
-            <li>Âge adulte: Perte des liens familiaux</li>
-            <li>2022-présent: Reconstruction du réseau</li>
-            <li>Actuel: Réseau de soutien en développement</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="evolution-chart">
-        <h3>Évolution Globale</h3>
-        <div class="chart-container">
-          <div class="chart-axis">
-            <span>1980</span>
-            <span>1990</span>
-            <span>2000</span>
-            <span>2010</span>
-            <span>2020</span>
-            <span>2025</span>
-          </div>
-          <div class="chart-lines">
-            <div class="chart-line stability">
-              <span class="chart-label">Stabilité</span>
-            </div>
-            <div class="chart-line health">
-              <span class="chart-label">Santé</span>
-            </div>
-            <div class="chart-line social">
-              <span class="chart-label">Social</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Documents Associés -->
-    <section id="documents" class="documents-section card">
-      <h2>Documents et Ressources Associés</h2>
-
-      <div class="document-grid">
-        <div class="document-item">
-          <h3>Rapports Médicaux</h3>
-          <ul>
-            <li>Bilan ADOS-2 (2024) - <a href="/dossier-clinique-astro/archives">Télécharger</a></li>
-            <li>Compte-rendu psychiatrique (2024) - <a href="/dossier-clinique-astro/archives">Télécharger</a></li>
-            <li>Évaluations psychométriques (2024-2026) - <a href="/dossier-clinique-astro/archives">Télécharger</a></li>
-          </ul>
-        </div>
-
-        <div class="document-item">
-          <h3>Documents Sociaux</h3>
-          <ul>
-            <li>Notification AAH (2024) - <a href="/dossier-clinique-astro/archives">Télécharger</a></li>
-            <li>Demande HLM (2025) - <a href="/dossier-clinique-astro/archives">Télécharger</a></li>
-            <li>Contrat d'engagement bénévole - <a href="/dossier-clinique-astro/archives">Télécharger</a></li>
-          </ul>
-        </div>
-
-        <div class="document-item">
-          <h3>Récits et Témoignages</h3>
-          <ul>
-            <li>Récit de vie autobiographique - <a href="/dossier-clinique-astro/archives">Télécharger</a></li>
-            <li>Journal thérapeutique (extraits) - <a href="/dossier-clinique-astro/archives">Télécharger</a></li>
-            <li>Témoignages d'intervenants - <a href="/dossier-clinique-astro/archives">Télécharger</a></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Navigation vers autres sections -->
-    <section class="related-navigation">
-      <h2>Navigation Connexe</h2>
-      <div class="nav-grid">
-        <a href="/dossier-clinique-astro/clinique" class="nav-card">
-          <h3>Bilan Clinique</h3>
-          <p>Voir les évaluations médicales détaillées</p>
-        </a>
-        <a href="/dossier-clinique-astro/social" class="nav-card">
-          <h3>Réalités Sociales</h3>
-          <p>Situation actuelle et suivi social</p>
-        </a>
-        <a href="/dossier-clinique-astro/projet" class="nav-card">
-          <h3>Projet Associatif</h3>
-          <p>Découvrir le projet actuel</p>
-        </a>
-      </div>
-    </section>
+    </main>
   </div>
-
-  <!-- Styles spécifiques -->
-  <style>
-    .timeline-container {
-      position: relative;
-      padding: var(--spacing-lg) 0;
-      margin: var(--spacing-lg) 0;
-    }
-
-    .timeline-line {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background-color: var(--color-secondary);
-      transform: translateX(-50%);
-    }
-
-    .timeline-item {
-      position: relative;
-      margin-bottom: var(--spacing-lg);
-      display: flex;
-      justify-content: center;
-    }
-
-    .timeline-dot {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      border: 3px solid white;
-      box-shadow: 0 0 0 2px currentColor;
-    }
-
-    .timeline-dot.birth {
-      background-color: var(--color-success);
-    }
-
-    .timeline-dot.critical {
-      background-color: var(--color-danger);
-    }
-
-    .timeline-dot.medical {
-      background-color: #6c5ce7;
-    }
-
-    .timeline-dot.work {
-      background-color: #fd79a8;
-    }
-
-    .timeline-dot.admin {
-      background-color: #00b894;
-    }
-
-    .timeline-dot.project {
-      background-color: #fdcb6e;
-    }
-
-    .timeline-content {
-      width: 45%;
-      padding: var(--spacing-sm);
-      background-color: white;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-    }
-
-    .timeline-year {
-      font-weight: 700;
-      color: var(--color-secondary);
-      margin-bottom: var(--spacing-sm);
-    }
-
-    .timeline-event {
-      font-style: italic;
-    }
-
-    .timeline-item:nth-child(odd) .timeline-content {
-      margin-left: 10%;
-    }
-
-    .timeline-item:nth-child(even) .timeline-content {
-      margin-right: 10%;
-    }
-
-    .timeline-legend {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: var(--spacing-md);
-      margin-top: var(--spacing-lg);
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-sm);
-    }
-
-    .legend-dot {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-
-    .legend-dot.birth {
-      background-color: var(--color-success);
-    }
-
-    .legend-dot.critical {
-      background-color: var(--color-danger);
-    }
-
-    .legend-dot.medical {
-      background-color: #6c5ce7;
-    }
-
-    .legend-dot.work {
-      background-color: #fd79a8;
-    }
-
-    .legend-dot.admin {
-      background-color: #00b894;
-    }
-
-    .legend-dot.project {
-      background-color: #fdcb6e;
-    }
-
-    .period-card {
-      margin-bottom: var(--spacing-lg);
-      background-color: white;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      overflow: hidden;
-    }
-
-    .period-header {
-      background-color: var(--color-primary);
-      color: white;
-      padding: var(--spacing-md);
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-md);
-      flex-wrap: wrap;
-    }
-
-    .period-badge {
-      background-color: rgba(255, 255, 255, 0.2);
-      padding: var(--spacing-sm) var(--spacing-md);
-      border-radius: 20px;
-      font-size: 0.9rem;
-    }
-
-    .current-period-badge {
-      background-color: var(--color-secondary);
-      padding: var(--spacing-sm) var(--spacing-md);
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
-    .period-content {
-      padding: var(--spacing-lg);
-    }
-
-    .period-markdown {
-      line-height: 1.8;
-    }
-
-    .period-markdown h3 {
-      margin-top: var(--spacing-md);
-      color: var(--color-secondary);
-    }
-
-    .period-markdown ul {
-      margin-left: var(--spacing-md);
-    }
-
-    .period-footer {
-      background-color: #f8f9fa;
-      padding: var(--spacing-sm) var(--spacing-md);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid #ddd;
-    }
-
-    .analysis-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--spacing-md);
-    }
-
-    .analysis-item {
-      background-color: white;
-      padding: var(--spacing-md);
-      border-radius: var(--border-radius);
-      border: 1px solid #ddd;
-    }
-
-    .document-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--spacing-md);
-    }
-
-    .document-item {
-      background-color: white;
-      padding: var(--spacing-md);
-      border-radius: var(--border-radius);
-      border: 1px solid #ddd;
-    }
-
-    .nav-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--spacing-md);
-    }
-
-    .nav-card {
-      background-color: white;
-      padding: var(--spacing-lg);
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      text-align: center;
-      transition: var(--transition);
-      text-decoration: none;
-      color: var(--color-dark);
-    }
-
-    .nav-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .chart-container {
-      margin-top: var(--spacing-md);
-      padding: var(--spacing-md);
-      background-color: white;
-      border-radius: var(--border-radius);
-    }
-
-    .chart-axis {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: var(--spacing-sm);
-      font-size: 0.9rem;
-      color: var(--color-primary);
-    }
-
-    .chart-lines {
-      position: relative;
-      height: 100px;
-    }
-
-    .chart-line {
-      position: absolute;
-      height: 2px;
-      background-color: currentColor;
-      bottom: 0;
-    }
-
-    .chart-line.stability {
-      width: 80%;
-      left: 10%;
-      background-color: var(--color-success);
-    }
-
-    .chart-line.health {
-      width: 60%;
-      left: 20%;
-      background-color: var(--color-danger);
-      bottom: 20px;
-    }
-
-    .chart-line.social {
-      width: 40%;
-      left: 30%;
-      background-color: var(--color-warning);
-      bottom: 40px;
-    }
-
-    .chart-label {
-      position: absolute;
-      right: -60px;
-      top: -10px;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-
-    @media (max-width: 768px) {
-      .timeline-content {
-        width: 80%;
-      }
-
-      .timeline-item:nth-child(odd) .timeline-content,
-      .timeline-item:nth-child(even) .timeline-content {
-        margin: 0;
-      }
-
-      .chart-label {
-        display: none;
-      }
-    }
-  </style>
 </MainLayout>
+
+<style>
+  /* ----------------------------------------------------------------------
+     STRUCTURE PRINCIPALE
+     ---------------------------------------------------------------------- */
+  .timeline-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: var(--spacing-xl);
+    min-height: 100vh;
+  }
+
+  /* ----------------------------------------------------------------------
+     SIDEBAR DE NAVIGATION
+     ---------------------------------------------------------------------- */
+  .timeline-sidebar {
+    position: sticky;
+    top: calc(var(--spacing-xl) * 2);
+    align-self: start;
+    max-height: calc(100vh - var(--spacing-xl) * 4);
+    overflow-y: auto;
+    padding-right: var(--spacing-md);
+  }
+
+  .sidebar-title {
+    font-size: 1.125rem;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--color-primary);
+    padding-bottom: var(--spacing-sm);
+  }
+
+  .periods-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .period-item {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .period-link {
+    display: block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    text-decoration: none;
+    color: var(--color-gray-700);
+    border-left: 3px solid transparent;
+    transition: all var(--transition-base);
+  }
+
+  .period-link:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+    border-left-color: var(--color-primary);
+  }
+
+  .period-label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--color-gray-900);
+  }
+
+  .period-title {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--color-gray-600);
+    margin-top: var(--spacing-xs);
+  }
+
+  /* ----------------------------------------------------------------------
+     LÉGENDE DES DOCUMENTS
+     ---------------------------------------------------------------------- */
+  .documents-legend {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-gray-200);
+  }
+
+  .legend-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs) 0;
+    font-size: 0.875rem;
+    color: var(--color-gray-600);
+  }
+
+  .legend-icon {
+    font-size: 1rem;
+    width: 24px;
+    text-align: center;
+  }
+
+  /* ----------------------------------------------------------------------
+     CONTENU DES PÉRIODES
+     ---------------------------------------------------------------------- */
+  .timeline-content {
+    padding-bottom: var(--spacing-3xl);
+  }
+
+  .period-section {
+    margin-bottom: var(--spacing-3xl);
+    scroll-margin-top: var(--spacing-xl);
+  }
+
+  .period-header {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--color-gray-200);
+  }
+
+  .period-title {
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .period-years {
+    font-size: 1.5rem;
+    color: var(--color-gray-600);
+    font-weight: 400;
+  }
+
+  .period-description {
+    font-size: 1.125rem;
+    color: var(--color-gray-700);
+    max-width: 80ch;
+  }
+
+  /* ----------------------------------------------------------------------
+     DOCUMENTS ET CARTES
+     ---------------------------------------------------------------------- */
+  .documents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  .document-card {
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--color-gray-200);
+    background-color: var(--color-white);
+  }
+
+  .document-card.medical { border-top: 4px solid #ef4444; }
+  .document-card.social { border-top: 4px solid #3b82f6; }
+  .document-card.personal { border-top: 4px solid #f59e0b; }
+
+  .narrative-placeholder {
+    padding: var(--spacing-md);
+    background-color: var(--color-gray-50);
+    border-radius: var(--border-radius-md);
+    font-style: italic;
+  }
+
+  /* ----------------------------------------------------------------------
+     ANALYSE ET NAVIGATION
+     ---------------------------------------------------------------------- */
+  .period-analysis {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: var(--color-primary-light);
+    border-radius: var(--border-radius-md);
+    border-left: 4px solid var(--color-primary);
+  }
+
+  .period-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-gray-200);
+  }
+
+  .nav-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .nav-link:hover { text-decoration: underline; }
+
+  /* ----------------------------------------------------------------------
+     RESPONSIVE
+     ---------------------------------------------------------------------- */
+  @media (max-width: 992px) {
+    .timeline-container { grid-template-columns: 1fr; }
+    .timeline-sidebar { position: static; max-height: none; }
+  }
+</style>
